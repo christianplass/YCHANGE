@@ -1,0 +1,14 @@
+/*******************************
+        Ychange Index
+********************************/
+.ychange-index {
+        padding: 10px 0;
+}
+.ychange-index > .elgg-col > .elgg-inner {
+        padding-right: 5px;
+        padding-left: 5px;
+}
+
+.ychange-index-logo {
+    text-align: center;
+}
