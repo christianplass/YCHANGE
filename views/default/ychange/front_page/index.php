@@ -25,6 +25,8 @@ $mod_params = ['class' => 'elgg-module-highlight'];
         </div>
     </div>
 
+    <div class="clearfloat"></div>
+
     <div class="elgg-col elgg-col-1of1 ychange-index-partners">
         <div class="elgg-inner pvm">
             <?php echo elgg_view_module('featured', elgg_echo('ychange:index:partners'), $vars['partners'], $mod_params); ?>
