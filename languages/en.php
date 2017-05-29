@@ -5,4 +5,5 @@ return [
     'ychange:index:participate' => 'How to participate?',
     'ychange:index:partners' => 'Partners',
     'ychange:index:contact' => 'Contact',
+    'ychange:site:menu:video_tutorials' => 'Video tutorials',
 ];

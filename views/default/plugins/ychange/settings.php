@@ -23,3 +23,10 @@
     </label>
     <?php echo elgg_view('input/longtext', ['name' => 'params[participate]', 'value' => $vars['entity']->participate]); ?>
 </div>
+
+<div class="mtm">
+    <label>
+        <?php echo elgg_echo('ychange:site:menu:video_tutorials'); ?>
+    </label>
+    <?php echo elgg_view('input/longtext', ['name' => 'params[tutorials]', 'value' => $vars['entity']->tutorials]); ?>
+</div>
