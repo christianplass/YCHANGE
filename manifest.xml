@@ -14,6 +14,10 @@
         <type>php_version</type>
         <version>5.4</version>
     </requires>
+    <requires>
+        <type>php_extension</type>
+        <name>curl</name>
+    </requires>
     <conflicts>
         <type>plugin</type>
         <name>custom_index</name>
