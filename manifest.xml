@@ -22,4 +22,5 @@
         <type>plugin</type>
         <name>custom_index</name>
     </conflicts>
+    <activate_on_install>true</activate_on_install>
 </plugin_manifest>

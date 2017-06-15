@@ -2,6 +2,7 @@
 
 define('RECAPTCHA_JS_URL', 'https://www.google.com/recaptcha/api.js');
 define('RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
+define('GOOGLE_MAPS_JS_URL', 'https://maps.googleapis.com/maps/api/js?key=');
 
 // Register plugin initialization hook
 elgg_register_event_handler('init', 'system', 'ychange_init');
@@ -42,6 +43,140 @@ function ychange_tutorials_page_handler($page)
 }
 
 /**
+ * Projects page handler
+ * @param  array $page Page path parts
+ * @return bool
+ */
+function ychange_project_page_handler($page)
+{
+    elgg_load_library('elgg:ychange:project');
+
+    // push all projects breadcrumb
+    elgg_push_breadcrumb(elgg_echo('ychange:projects'), 'projects/all');
+
+    $page_type = elgg_extract(0, $page, 'all');
+    $resource_vars = [
+        'page_type' => $page_type,
+    ];
+
+    switch ($page_type) {
+        case 'owner':
+        $resource_vars['username'] = elgg_extract(1, $page);
+
+        echo elgg_view_resource('project/owner', $resource_vars);
+        break;
+        case 'archive':
+        $resource_vars['username'] = elgg_extract(1, $page);
+        $resource_vars['lower'] = elgg_extract(2, $page);
+        $resource_vars['upper'] = elgg_extract(3, $page);
+
+        echo elgg_view_resource('project/archive', $resource_vars);
+        break;
+        case 'view':
+        $resource_vars['guid'] = elgg_extract(1, $page);
+
+        echo elgg_view_resource('project/view', $resource_vars);
+        break;
+        case 'add':
+        elgg_load_js('googleMaps');
+        elgg_require_js("ychange/google_maps");
+        $resource_vars['guid'] = elgg_extract(1, $page);
+
+        echo elgg_view_resource('project/add', $resource_vars);
+        break;
+        case 'edit':
+        elgg_load_js('googleMaps');
+        elgg_require_js("ychange/google_maps");
+        $resource_vars['guid'] = elgg_extract(1, $page);
+        $resource_vars['revision'] = elgg_extract(2, $page);
+
+        echo elgg_view_resource('project/edit', $resource_vars);
+        break;
+        case 'group':
+        $resource_vars['group_guid'] = elgg_extract(1, $page);
+        $resource_vars['subpage'] = elgg_extract(2, $page);
+        $resource_vars['lower'] = elgg_extract(3, $page);
+        $resource_vars['upper'] = elgg_extract(4, $page);
+
+        echo elgg_view_resource('project/group', $resource_vars);
+        break;
+        case 'all':
+        echo elgg_view_resource('project/all', $resource_vars);
+        break;
+        default:
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Hadle Project entity URL
+ * @param string $hook  Hook name
+ * @param string $type  Entity type
+ * @param string $url   URL
+ * @param array $params Parameters
+ */
+function ychange_project_set_url($hook, $type, $url, $params)
+{
+    $entity = $params['entity'];
+    if ( elgg_instanceof($entity, 'object', 'project') )
+    {
+        $friendly_title = elgg_get_friendly_title($entity->title);
+        return "projects/view/{$entity->guid}/$friendly_title";
+    }
+}
+
+/**
+* Add a menu item to an ownerblock
+*/
+function ychange_project_owner_block_menu($hook, $type, $return, $params)
+{
+    $entity = elgg_extract('entity', $params);
+    if ( $entity instanceof ElggUser )
+    {
+        $url = "projects/owner/{$entity->username}";
+        $return[] = new ElggMenuItem('project', elgg_echo('ychange:projects'), $url);
+
+    }
+    elseif ( $entity instanceof ElggGroup )
+    {
+        if ( $entity->project_enable != "no" )
+        {
+            $url = "projects/group/{$entity->guid}/all";
+            $return[] = new ElggMenuItem('project', elgg_echo('ychange:project:group'), $url);
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * [ychange_project_entity_menu_setup description]
+ * @param  [type] $hook   [description]
+ * @param  [type] $type   [description]
+ * @param  [type] $return [description]
+ * @param  [type] $params [description]
+ * @return [type]         [description]
+ */
+function ychange_project_entity_menu_setup($hook, $type, $return, $params)
+{
+    if ( elgg_in_context('widgets') )
+    {
+        return $return;
+    }
+
+    $entity = $params['entity'];
+    $handler = elgg_extract('handler', $params, false);
+    if ( $handler != 'projects' )
+    {
+        return $return;
+    }
+
+    return $return;
+}
+
+/**
  * reCaptcha action hook
  * @param  string $hook         Hook name
  * @param  string  $entity_type Type
@@ -49,7 +184,8 @@ function ychange_tutorials_page_handler($page)
  * @param  mixed $params        Params
  * @return bool
  */
-function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $params) {
+function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $params)
+{
   $gRecaptchaResponse = get_input('g-recaptcha-response');
   $remoteIp = _elgg_services()->request->getClientIp();
 
@@ -100,15 +236,39 @@ function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $
  */
 function ychange_init()
 {
+    elgg_register_library('elgg:ychange:project', __DIR__ . '/lib/project.php');
+
     elgg_extend_view('elgg.css', 'ychange/css');
     elgg_extend_view('elgg.css', 'ychange/front_page/index.css');
 
     elgg_register_plugin_hook_handler('config', 'htmlawed', 'ychange_htmlawed_config');
 
-    $item = new ElggMenuItem('tutorials', elgg_echo('ychange:site:menu:video_tutorials'), 'tutorials');
-    elgg_register_menu_item('site', $item);
+    $tutorialsItem = new ElggMenuItem('tutorials', elgg_echo('ychange:site:menu:video_tutorials'), 'tutorials');
+    elgg_register_menu_item('site', $tutorialsItem);
 
     elgg_register_page_handler('tutorials', 'ychange_tutorials_page_handler');
+
+    $projectItem = new ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/all');
+    elgg_register_menu_item('site', $projectItem);
+
+    elgg_register_page_handler('projects', 'ychange_project_page_handler');
+
+    elgg_register_plugin_hook_handler('entity:url', 'object', 'ychange_project_set_url');
+
+     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'ychange_project_owner_block_menu');
+
+    elgg_register_entity_type('object', 'project');
+
+    add_group_tool_option('project', elgg_echo('ychange:enableproject'), true);
+    elgg_extend_view('groups/tool_latest', 'project/group_module');
+
+    elgg_register_plugin_hook_handler('register', 'menu:entity', 'ychange_project_entity_menu_setup');
+
+    $action_path = __DIR__ . '/actions/project';
+    elgg_register_action('project/save', "$action_path/save.php");
+    elgg_register_action('project/delete', "$action_path/delete.php");
+
+    elgg_register_plugin_hook_handler('likes:is_likable', 'object:project', 'Elgg\Values::getTrue');
 
     elgg_register_js('recaptcha', RECAPTCHA_JS_URL, 'head');
     elgg_register_plugin_hook_handler("action", "register", "ychange_captcha_verify_action_hook");
@@ -128,4 +288,6 @@ function ychange_init()
             elgg_delete_admin_notice('recaptcha_settings_missing');
         }
     }
+
+    elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . elgg_get_plugin_setting('google_maps_key', 'ychange'), 'head'); // XXX Need to provide a key
 }
