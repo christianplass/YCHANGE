@@ -14,27 +14,10 @@ $results = get_input('results');
 $sources = get_input('sources');
 $location = htmlspecialchars(get_input('location', '', false), ENT_QUOTES, 'UTF-8');
 $category = get_input('category');
-$access_id = (int) get_input('access_id');
 $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('guid');
 
-if ( $container_guid == 0 )
-{
-    // TODO Raise an erro as only groups are allowed
-    $container_guid = elgg_get_logged_in_user_guid();
-}
-
 elgg_make_sticky_form('project');
-
-// check if upload attempted and failed
-// XXX Need to handle file uploads after project has been created
-/*$uploaded_files = elgg_get_uploaded_files('satellite_images');
-$uploaded_file = array_shift($uploaded_files);
-if ($uploaded_file && !$uploaded_file->isValid()) {
-    $error = elgg_get_friendly_upload_error($uploaded_file->getError());
-    register_error($error);
-    forward(REFERER);
-}*/
 
 // check whether this is a new file or an edit
 $new_project = true;
@@ -45,6 +28,21 @@ if ( $guid > 0 )
 
 if ( $new_project )
 {
+    if ( $container_guid == 0 )
+    {
+        register_error(elgg_echo('ychange:project:no_container'));
+        forward(REFERER);
+    }
+    else
+    {
+        $container = get_entity($container_guid);
+        if ( !elgg_instanceof($container, 'group') )
+        {
+            register_error(elgg_echo('ychange:project:wrong_container'));
+            forward(REFERER);
+        }
+    }
+
     $project = new ElggYchangeProject();
 }
 else
@@ -73,32 +71,8 @@ $project->results = $results;
 $project->sources = $sources;
 $project->location = $location;
 $project->category = $category;
-$project->access_id = $access_id;
+$project->access_id = get_user_access_collections($container_guid)[0]->id;
 $project->container_guid = $container_guid;
-
-// XXX This one should go through an array of uploaded files
-// Need to set relation to initial Project
-/*if ($uploaded_file && $uploaded_file->isValid()) {
-
-    if ($file->acceptUploadedFile($uploaded_file)) {
-        $guid = $file->save();
-    }
-
-    if ($guid && $file->saveIconFromElggFile($file)) {
-        $file->thumbnail = $file->getIcon('small')->getFilename();
-        $file->smallthumb = $file->getIcon('medium')->getFilename();
-        $file->largethumb = $file->getIcon('large')->getFilename();
-    } else {
-        $file->deleteIcon();
-        unset($file->thumbnail);
-        unset($file->smallthumb);
-        unset($file->largethumb);
-    }
-}
-else if ( $project->exists() )
-{
-    $project->save();
-}*/
 
 if ( $new_project )
 {

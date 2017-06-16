@@ -143,16 +143,6 @@ $category_input = elgg_view('input/select', [
 	'options_values' => ychange_project_categories_options(),
 ]);
 
-$access_label = elgg_echo('access');
-$access_input = elgg_view('input/access', [
-	'name' => 'access_id',
-	'id' => 'project_access_id',
-	'value' => $vars['access_id'],
-	'entity' => $vars['entity'],
-	'entity_type' => 'object',
-	'entity_subtype' => 'project',
-]);
-
 // hidden inputs
 $container_guid_input = elgg_view('input/hidden', ['name' => 'container_guid', 'value' => elgg_get_page_owner_guid()]);
 $guid_input = elgg_view('input/hidden', ['name' => 'guid', 'value' => $vars['guid']]);
@@ -216,11 +206,6 @@ $draft_warning
 <div>
     <label for="project_category">$category_label</label>
     $category_input
-</div>
-
-<div>
-	<label for="project_access_id">$access_label</label>
-	$access_input
 </div>
 
 $guid_input

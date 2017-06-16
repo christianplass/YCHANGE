@@ -40,6 +40,8 @@ return [
     'ychange:project:group' => 'Group projects',
     'ychange:upload_limit' => 'Maximum allowed file size is %s',
     'ychange:post_limit' => 'Maximum allowed total upload size is %s',
+    'ychange:project:no_container' => 'Project has to belong to a group',
+    'ychange:project:wrong_container' => 'Projects can only belong to groups',
 
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',
