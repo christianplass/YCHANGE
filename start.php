@@ -152,12 +152,7 @@ function ychange_project_owner_block_menu($hook, $type, $return, $params)
 }
 
 /**
- * [ychange_project_entity_menu_setup description]
- * @param  [type] $hook   [description]
- * @param  [type] $type   [description]
- * @param  [type] $return [description]
- * @param  [type] $params [description]
- * @return [type]         [description]
+ * Setup project entity menu
  */
 function ychange_project_entity_menu_setup($hook, $type, $return, $params)
 {
@@ -289,5 +284,17 @@ function ychange_init()
         }
     }
 
-    elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . elgg_get_plugin_setting('google_maps_key', 'ychange'), 'head'); // XXX Need to provide a key
+    $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
+    if ( empty($googleMapsKey) )
+    {
+        elgg_add_admin_notice('google_maps_settings_missing', elgg_echo('ychange:google:maps:settings:missing'));
+    }
+    else
+    {
+        if ( elgg_admin_notice_exists('google_maps_settings_missing') )
+        {
+            elgg_delete_admin_notice('google_maps_settings_missing');
+        }
+    }
+    elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
 }

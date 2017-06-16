@@ -38,6 +38,8 @@ return [
     'ychange:project:archives' => 'Archives',
     'ychange:project:error:cannot_edit_project' => 'You are not allowed to change this project',
     'ychange:project:group' => 'Group projects',
+    'ychange:upload_limit' => 'Maximum allowed file size is %s',
+    'ychange:post_limit' => 'Maximum allowed total upload size is %s',
 
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',

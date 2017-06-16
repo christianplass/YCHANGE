@@ -29,6 +29,25 @@ $save_button = elgg_view('input/submit', [
 ]);
 $action_buttons = $save_button . $delete_link;
 
+// Get post_max_size and upload_max_filesize
+$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
+$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
+
+// Determine the correct value
+$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
+
+$upload_limit = elgg_view('elements/forms/help', [
+	'help' => elgg_echo('ychange:upload_limit', [elgg_format_bytes($max_upload)]),
+]);
+
+$post_limit = '';
+if ( $post_max_size > $upload_max_filesize )
+{
+	$post_limit = elgg_view('elements/forms/help', [
+		'help' => elgg_echo('ychange:post_limit', [elgg_format_bytes($post_max_size)]),
+	]);
+}
+
 $icon_label = elgg_echo('ychange:project:icon');
 $icon_input = elgg_view('input/file', [
 	'name' => 'icon',
@@ -146,11 +165,14 @@ $draft_warning
 <div>
 	<label for="project_icon">$icon_label</label>
 	$icon_input
+	$upload_limit
 </div>
 
 <div>
 	<label for="project_satellite_images">$satellite_images_label</label>
 	$satellite_images_input
+	$upload_limit
+	$post_limit
 	<div>
 	    $uploaded_satellite_images
 	</div>

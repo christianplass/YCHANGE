@@ -18,6 +18,22 @@
         <type>php_extension</type>
         <name>curl</name>
     </requires>
+    <requires>
+        <type>php_ini</type>
+        <name>upload_max_filesize</name>
+        <value>5242880</value>
+        <comparison>>=</comparison>
+    </requires>
+    <requires>
+        <type>php_ini</type>
+        <name>post_max_size</name>
+        <value>47185920</value>
+        <comparison>>=</comparison>
+    </requires>
+    <requires>
+        <type>plugin</type>
+        <name>groups</name>
+    </requires>
     <conflicts>
         <type>plugin</type>
         <name>custom_index</name>
