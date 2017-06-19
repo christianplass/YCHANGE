@@ -42,7 +42,7 @@ return [
     'ychange:post_limit' => 'Maximum allowed total upload size is %s',
     'ychange:project:no_container' => 'Student project has to belong to a group',
     'ychange:project:wrong_container' => 'Student projects can only belong to groups',
-    'item:object:satellite_image' => 'Satellite images',
+    'ychange:project:required_field_missing' => 'At least one of the required fields is missing',
 
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',
@@ -55,5 +55,6 @@ return [
 
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
+    'item:object:satellite_image' => 'Satellite images',
     'projects:add' => 'Add a student project',
 ];

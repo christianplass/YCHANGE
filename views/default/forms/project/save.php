@@ -168,12 +168,12 @@ $draft_warning
 	</div>
 </div>
 
-<div>
+<div class="ychange-required">
 	<label for="project_name">$title_label</label>
 	$title_input
 </div>
 
-<div>
+<div class="ychange-required">
 	<label for="project_topic">$topic_label</label>
 	$topic_input
 </div>

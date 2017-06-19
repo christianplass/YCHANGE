@@ -115,7 +115,12 @@ if ( $full )
 		]);
 		$location = '<label class="ychnage-project-label">' . elgg_echo('ychange:project:location') . '</label>';
 		$location .= "<div class=\"elgg-output\">$location_output</div>";
-		$location .= "<img src=\"https://maps.googleapis.com/maps/api/staticmap?center={$project->location}&amp;zoom=10&amp;size=320x240&amp;maptype=hybrid&amp;markers=color:red%7C{$project->location}&amp;key={$key}\" alt=\"map\">";
+		if ( $project->hasCorrectGeolocation() )
+		{
+			$locationBaseUrl = GOOGLE_MAPS_STATIC_URL;
+			$location .= "<img src=\"{$locationBaseUrl}{$project->location}&amp;zoom=10&amp;size=320x240&amp;maptype=hybrid&amp;markers=color:red%7C{$project->location}&amp;key={$key}\" alt=\"map\">";
+
+		}
 
 	}
 

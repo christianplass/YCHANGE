@@ -19,6 +19,12 @@ $guid = (int) get_input('guid');
 
 elgg_make_sticky_form('project');
 
+if ( empty($title) || empty($topic) )
+{
+    register_error(elgg_echo('ychange:project:required_field_missing'));
+    forward(REFERER);
+}
+
 // check whether this is a new file or an edit
 $new_project = true;
 if ( $guid > 0 )

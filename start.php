@@ -3,6 +3,7 @@
 define('RECAPTCHA_JS_URL', 'https://www.google.com/recaptcha/api.js');
 define('RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
 define('GOOGLE_MAPS_JS_URL', 'https://maps.googleapis.com/maps/api/js?key=');
+define('GOOGLE_MAPS_STATIC_URL', 'https://maps.googleapis.com/maps/api/staticmap?center=');
 
 // Register plugin initialization hook
 elgg_register_event_handler('init', 'system', 'ychange_init');
