@@ -69,7 +69,10 @@ function ychange_project_get_page_content_list($container_guid = NULL)
 		elgg_push_breadcrumb(elgg_echo('ychange:projects'));
 	}
 
-	elgg_register_title_button('projects', 'add', 'object', 'project');
+	if ( $container instanceof ElggGroup )
+	{
+		elgg_register_title_button('projects', 'add', 'object', 'project');
+	}
 
 	$return['content'] = elgg_list_entities($options);
 

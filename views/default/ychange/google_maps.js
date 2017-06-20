@@ -13,7 +13,8 @@ define(function(require) {
             var _this = $(this),
                 mapElement = $('<div></div>'),
                 map = null,
-                marker = null;
+                marker = null,
+                timeout = null;
 
             mapElement
                 .attr('id', _this.attr('id') + '_map')
@@ -25,33 +26,36 @@ define(function(require) {
                 zoom: 4
             });
             map.addListener('click', function(event) {
-                // TODO Consider using timeout and preventing marker from being
-                // added in case dblclick happens
-                if ( !marker ) {
-                    marker = new google.maps.Marker({
-                        position: event.latLng,
-                        map: map,
-                        draggable: true
-                    });
-
-                    marker.addListener('dragend', function() {
-                        setGeolocationValue(_this, marker.getPosition());
-                    });
-                } else {
-                    marker.setPosition(event.latLng);
+                if ( timeout ) {
+                    clearTimeout(timeout);
+                    timeout = null;
                 }
 
-                setGeolocationValue(_this, event.latLng);
+                timeout = setTimeout(function() {
+                    if ( !marker ) {
+                        marker = new google.maps.Marker({
+                            position: event.latLng,
+                            map: map,
+                            draggable: true
+                        });
+
+                        marker.addListener('dragend', function() {
+                            setGeolocationValue(_this, marker.getPosition());
+                        });
+                    } else {
+                        marker.setPosition(event.latLng);
+                    }
+
+                    setGeolocationValue(_this, event.latLng);
+                }, 250);
+            });
+
+            map.addListener('dblclick', function() {
+                if ( timeout ) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
             });
         });
     }
-
-    /*window.reCaptchaSolvedCb = function(token) {
-        form.off('submit').trigger('submit');
-    };
-
-    form.on('submit', function(e) {
-        e.preventDefault();
-        grecaptcha.execute();
-    });*/
 });

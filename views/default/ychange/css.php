@@ -63,3 +63,9 @@ body {
     width: 100%;
     height: 320px;
 }
+
+.ychange-required label::after {
+    content: ' *';
+    color: red;
+    vertical-align: middle;
+}
