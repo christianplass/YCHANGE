@@ -89,15 +89,14 @@ else
     $project->save();
 }
 
-$uploaded_icons = elgg_get_uploaded_files('icon');
-$uploaded_icon = array_shift($uploaded_icons);
-if ( $uploaded_icon && $uploaded_icon->isValid() && substr_count($uploaded_icon->getClientMimeType(), 'image/') )
+$has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));
+if ( $has_uploaded_icon )
 {
     $filehandler = new ElggFile();
     $filehandler->owner_guid = $project->owner_guid;
     $filehandler->setFilename("projects/$project->guid.jpg");
     $filehandler->open("write");
-    $filehandler->write($uploaded_icon);
+    $filehandler->write(get_uploaded_file('icon'));
     $filehandler->close();
 
     if ( $filehandler->exists() )
