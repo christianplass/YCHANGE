@@ -38,6 +38,7 @@ function ychange_tutorials_page_handler($page)
         ));
     }
 
+    elgg_require_js("ychange/video_tutorials");
     echo elgg_view_resource('ychange/tutorials');
 
     return true;
