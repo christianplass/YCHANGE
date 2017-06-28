@@ -3,6 +3,10 @@
  * CSS YCHANGE theme
  *
  */
+$bodyBgColor = 'rgba(255, 255, 255, 0.85)';
+$bodyInnerBgColor = 'rgba(255, 255, 255, 0.25)';
+$oceanBgColor = '#01021E';
+$arcticBgColor = '#0F1F52';
 ?>
 /* <style> /**/
 
@@ -15,13 +19,56 @@ body {
 
 .elgg-body {
   background: #fff;
+  background-color: <?php echo $bodyBgColor; ?>;
   padding: 10px;
 }
+
 
 .elgg-sidebar {
   border: none;
   background: #fff;
+  background-color: <?php echo $bodyBgColor; ?>;
   padding: 10px;
+}
+
+.elgg-module .elgg-body {
+    background-color: <?php echo $bodyInnerBgColor; ?>;
+}
+
+.elgg-item .elgg-body {
+    background-color: <?php echo $bodyInnerBgColor; ?>;
+}
+
+.elgg-module-highlight .elgg-body {
+    background-color: <?php echo $bodyBgColor; ?>;
+}
+
+.elgg-page-header {
+    background-color: <?php echo $arcticBgColor; ?>;
+}
+
+.elgg-page-navbar {
+    background-color: <?php echo $oceanBgColor; ?>;
+}
+
+.elgg-menu-site > .elgg-state-selected > a, .elgg-menu-site > li:hover > a {
+    background-color: <?php echo $arcticBgColor; ?>;
+}
+
+.elgg-menu-site-more > li > a:hover {
+    color: #fff;
+}
+
+:focus > .elgg-icon, .elgg-icon:hover, .elgg-icon-hover {
+    color: <?php echo $arcticBgColor; ?>;
+}
+
+a {
+    color: <?php echo $arcticBgColor; ?>;
+}
+
+.ychange-description-site {
+    color: #ccc;
 }
 
 .ychange-satellite-link {
