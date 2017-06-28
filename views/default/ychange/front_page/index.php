@@ -33,6 +33,12 @@ $mod_params = ['class' => 'elgg-module-highlight'];
         </div>
     </div>
 
+    <div class="elgg-col elgg-col-1of1 ychange-index-sponsors">
+        <div class="elgg-inner pvm">
+            <?php echo elgg_view_module('featured', elgg_echo('ychange:index:sponsors'), $vars['sponsors'], $mod_params); ?>
+        </div>
+    </div>
+
     <div class="elgg-col elgg-col-1of1 ychange-index-contact">
         <div class="elgg-inner pvm">
             <?php echo elgg_view_module('featured', elgg_echo('ychange:index:contact'), $vars['contact'], $mod_params); ?>

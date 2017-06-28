@@ -12,6 +12,7 @@ $vars = [
         'participate' => elgg_get_plugin_setting('participate', 'ychange'),
     ],
     'partners' => elgg_view('ychange/front_page/partners'),
+    'sponsors' => elgg_view('ychange/front_page/sponsors'),
     'contact' => elgg_view('ychange/front_page/contact'),
 ];
 

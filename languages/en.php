@@ -4,6 +4,7 @@ return [
     'ychange:index:goal' => 'What does it offer?',
     'ychange:index:participate' => 'How to participate?',
     'ychange:index:partners' => 'Partners',
+    'ychange:index:sponsors' => 'Sponsors',
     'ychange:index:contact' => 'Contact',
     'ychange:site:menu:video_tutorials' => 'Video tutorials',
     'ychange:captcha:captchafail' => 'Missing or incorrect captcha response',
