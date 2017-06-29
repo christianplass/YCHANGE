@@ -1,5 +1,6 @@
 <?php
 return [
+    'ychange:nasa:credits' => 'Credits to NASA’s Earth Observatory',
     'ychange:index:about' => 'What is it about?',
     'ychange:index:goal' => 'What does it offer?',
     'ychange:index:participate' => 'How to participate?',
@@ -24,8 +25,8 @@ return [
     'ychange:project:satellite_images' => 'Satellite image(s)',
     'ychange:project:name' => 'Student project name',
     'ychange:project:topic' => 'Topic',
-    'ychange:project:interesting' => 'Why is interesting?',
-    'ychange:project:useful' => 'Why is useful to study?',
+    'ychange:project:interesting' => 'Why is it interesting?',
+    'ychange:project:useful' => 'Why is it useful to study?',
     'ychange:project:results' => 'Results',
     'ychange:project:sources' => 'Sources used',
     'ychange:project:location' => 'Location (latitude and longitude separated by comma)',

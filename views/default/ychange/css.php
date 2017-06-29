@@ -14,7 +14,11 @@ $arcticBgColor = '#0F1F52';
     Ychange general styles
 ********************************/
 body {
-  background: url(<?php echo elgg_get_simplecache_url('backgrounds/site-bg.jpg'); ?>) no-repeat center center fixed;
+  background: url(<?php echo elgg_get_simplecache_url('backgrounds/site-europe-bg.jpg'); ?>) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .elgg-body {

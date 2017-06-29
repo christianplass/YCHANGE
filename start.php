@@ -248,6 +248,10 @@ function ychange_init()
     $projectItem = new ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/all');
     elgg_register_menu_item('site', $projectItem);
 
+    $nasaCredits = new ElggMenuItem('credits', elgg_echo('ychange:nasa:credits'), 'https://earthobservatory.nasa.gov');
+    $nasaCredits->setSection('meta');
+    elgg_register_menu_item('footer', $nasaCredits);
+
     elgg_register_page_handler('projects', 'ychange_project_page_handler');
 
     elgg_register_plugin_hook_handler('entity:url', 'object', 'ychange_project_set_url');
