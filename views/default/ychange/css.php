@@ -31,11 +31,7 @@ body {
   padding: 10px;
 }
 
-.elgg-module .elgg-body {
-    background-color: <?php echo $bodyInnerBgColor; ?>;
-}
-
-.elgg-item .elgg-body {
+.elgg-body .elgg-body, .elgg-sidebar .elgg-body {
     background-color: <?php echo $bodyInnerBgColor; ?>;
 }
 
