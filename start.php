@@ -228,6 +228,32 @@ function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $
 }
 
 /**
+ * Add elements to page head
+ * @param  string $hook Hook name
+ * @param  string $type Hook type
+ * @param  array $data Data array
+ * @return array       Array with additional heade elements
+ */
+function ychange_head($hook, $type, $data) {
+    $removables = array('apple-touch-icon', 'icon-vector', 'icon-16', 'icon-32', 'icon-64', 'icon-128');
+
+    foreach($removables as $removable)
+    {
+        if ( isset($data['links'][$removable]) )
+        {
+            unset($data['links'][$removable]);
+        }
+    }
+
+    $data['links']['icon-ico'] = array(
+        'rel' => 'icon',
+        'href' => elgg_get_simplecache_url('favicons/favicon.ico'),
+	  );
+
+    return $data;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -303,4 +329,6 @@ function ychange_init()
         }
     }
     elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
+
+    elgg_register_plugin_hook_handler('head', 'page', 'ychange_head');
 }
