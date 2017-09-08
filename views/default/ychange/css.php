@@ -27,6 +27,9 @@ body {
   padding: 10px;
 }
 
+a.elgg-heading-site, a.elgg-heading-site:hover {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
 
 .elgg-sidebar {
   border: none;
