@@ -61,7 +61,8 @@ function ychange_project_page_handler($page)
         'page_type' => $page_type,
     ];
 
-    switch ($page_type) {
+    switch ($page_type)
+    {
         case 'owner':
         $resource_vars['username'] = elgg_extract(1, $page);
 
@@ -135,18 +136,18 @@ function ychange_project_set_url($hook, $type, $url, $params)
 function ychange_project_owner_block_menu($hook, $type, $return, $params)
 {
     $entity = elgg_extract('entity', $params);
-    if ( $entity instanceof ElggUser )
+    if ( $entity instanceof \ElggUser )
     {
         $url = "projects/owner/{$entity->username}";
-        $return[] = new ElggMenuItem('project', elgg_echo('ychange:projects'), $url);
+        $return[] = new \ElggMenuItem('project', elgg_echo('ychange:projects'), $url);
 
     }
-    elseif ( $entity instanceof ElggGroup )
+    elseif ( $entity instanceof \ElggGroup )
     {
         if ( $entity->project_enable != "no" )
         {
             $url = "projects/group/{$entity->guid}/all";
-            $return[] = new ElggMenuItem('project', elgg_echo('ychange:project:group'), $url);
+            $return[] = new \ElggMenuItem('project', elgg_echo('ychange:project:group'), $url);
         }
     }
 
@@ -217,7 +218,8 @@ function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $
         {
             return true;
         }
-        else {
+        else
+        {
             _elgg_services()->logger->error( print_r( $parsedResponse['error-codes'], true ) );
         }
   }
@@ -234,7 +236,8 @@ function ychange_captcha_verify_action_hook($hook, $entity_type, $returnvalue, $
  * @param  array $data Data array
  * @return array       Array with additional heade elements
  */
-function ychange_head($hook, $type, $data) {
+function ychange_head($hook, $type, $data)
+{
     $removables = array('apple-touch-icon', 'icon-vector', 'icon-16', 'icon-32', 'icon-64', 'icon-128');
 
     foreach($removables as $removable)
@@ -254,6 +257,79 @@ function ychange_head($hook, $type, $data) {
 }
 
 /**
+ * Determines if user has a teacher role
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_is_teacher(\ElggUser &$user)
+{
+    return $user->teacher && $user->teacher === 'yes';
+}
+
+/**
+ * Tries to set teacher role to a user
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_make_teacher(\ElggUser &$user)
+{
+    if ( !elgg_is_admin_logged_in() )
+    {
+        return false;
+    }
+
+    $user->teacher = 'yes';
+
+    return $user->save();
+}
+
+/**
+ * Tries to remove teacher role from a user
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_remove_teacher(\ElggUser &$user)
+{
+    if ( !elgg_is_admin_logged_in() )
+    {
+        return false;
+    }
+
+    $user->teacher = 'no';
+
+    return $user->save();
+}
+
+/**
+ * Adds teacher role administration actions to user menu for administrators
+ * @param  string $hook  Hook name
+ * @param  string $type  Hook type
+ * @param  array $return An array of menu items
+ * @param  array $params An array of parameters
+ * @return array         An array of menu items
+ */
+function ychange_menu_user_hover($hook, $type, $return, $params)
+{
+    if ( elgg_is_admin_logged_in() )
+    {
+        $user = elgg_extract('entity', $params);
+        $isTeacher = ychange_is_teacher($user);
+
+        $actionName = $isTeacher ? 'removeteacher' : 'maketeacher';
+        $actionText = elgg_echo( $isTeacher ? 'ychange:user:action:remove:teacher' : 'ychange:user:action:make:teacher' );
+        $actionUrl = elgg_add_action_tokens_to_url('action/admin/user/' . $actionName . '?guid=' . $user->guid);
+
+        $menuItem = new \ElggMenuItem($actionName, $actionText, $actionUrl);
+        $menuItem->setSection('admin');
+        $menuItem->setConfirmText(true);
+
+        $return[] = $menuItem;
+    }
+
+    return $return;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -266,15 +342,15 @@ function ychange_init()
 
     elgg_register_plugin_hook_handler('config', 'htmlawed', 'ychange_htmlawed_config');
 
-    $tutorialsItem = new ElggMenuItem('tutorials', elgg_echo('ychange:site:menu:video_tutorials'), 'tutorials');
+    $tutorialsItem = new \ElggMenuItem('tutorials', elgg_echo('ychange:site:menu:video_tutorials'), 'tutorials');
     elgg_register_menu_item('site', $tutorialsItem);
 
     elgg_register_page_handler('tutorials', 'ychange_tutorials_page_handler');
 
-    $projectItem = new ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/all');
+    $projectItem = new \ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/all');
     elgg_register_menu_item('site', $projectItem);
 
-    $nasaCredits = new ElggMenuItem('credits', elgg_echo('ychange:nasa:credits'), 'https://earthobservatory.nasa.gov');
+    $nasaCredits = new \ElggMenuItem('credits', elgg_echo('ychange:nasa:credits'), 'https://earthobservatory.nasa.gov');
     $nasaCredits->setSection('meta');
     elgg_register_menu_item('footer', $nasaCredits);
 
@@ -331,4 +407,10 @@ function ychange_init()
     elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
 
     elgg_register_plugin_hook_handler('head', 'page', 'ychange_head');
+
+    elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'ychange_menu_user_hover');
+
+    $action_path = __DIR__ . '/actions/admin/user';
+    elgg_register_action('admin/user/maketeacher', "$action_path/maketeacher.php", 'admin');
+    elgg_register_action('admin/user/removeteacher', "$action_path/removeteacher.php", 'admin');
 }

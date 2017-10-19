@@ -56,6 +56,13 @@ return [
     'ychange:project:category:sustainable_urban_development' => 'Sustainable Urban Development',
     'ychange:project:category:water_resources_management' => 'Water Resources Management',
 
+    'ychange:user:action:make:teacher' => 'Make teacher',
+    'ychange:user:action:remove:teacher' => 'Remove teacher',
+    'ychange:admin:user:maketeacher:yes' => 'User is now a teacher.',
+    'ychange:admin:user:maketeacher:no' => 'We could not make this user a teacher.',
+    'ychange:admin:user:removeteacher:yes' => 'User is no longer a teacher.',
+    'ychange:admin:user:removeteacher:no' => 'We could not remove teacher privileges from this user.',
+
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
     'item:object:satellite_image' => 'Satellite images',
