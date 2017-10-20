@@ -5,6 +5,8 @@
 * @package Ychange
 */
 
+elgg_load_library('elgg:ychange:teacher');
+
 $guid = get_input('guid');
 $user = get_entity($guid);
 

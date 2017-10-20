@@ -143,6 +143,14 @@ $category_input = elgg_view('input/select', [
 	'options_values' => ychange_project_categories_options(),
 ]);
 
+$access_style = ychange_is_teacher_or_admin_logged_in() ? '' : 'display:none;';
+$access_label = elgg_echo('access');
+$access_input = elgg_view('input/access', [
+	'name' => 'access_id',
+	'id' => 'access_id',
+	'value' => elgg_extract('access_id', $vars, get_user_access_collections(elgg_get_page_owner_guid())[0]->id),
+]);
+
 // hidden inputs
 $container_guid_input = elgg_view('input/hidden', ['name' => 'container_guid', 'value' => elgg_get_page_owner_guid()]);
 $guid_input = elgg_view('input/hidden', ['name' => 'guid', 'value' => $vars['guid']]);
@@ -206,6 +214,11 @@ $draft_warning
 <div>
     <label for="project_category">$category_label</label>
     $category_input
+</div>
+
+<div style="$access_style">
+    <label for="access_id">$access_label</label>
+	$access_input
 </div>
 
 $guid_input

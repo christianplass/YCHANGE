@@ -52,6 +52,7 @@ function ychange_tutorials_page_handler($page)
 function ychange_project_page_handler($page)
 {
     elgg_load_library('elgg:ychange:project');
+    elgg_load_library('elgg:ychange:teacher');
 
     // push all projects breadcrumb
     elgg_push_breadcrumb(elgg_echo('ychange:projects'), 'projects/all');
@@ -257,60 +258,6 @@ function ychange_head($hook, $type, $data)
 }
 
 /**
- * Determines if user has a teacher role
- * @param  \ElggUser $user User object
- * @return boolean
- */
-function ychange_is_teacher(\ElggUser &$user)
-{
-    return $user->teacher && $user->teacher === 'yes';
-}
-
-/**
- * Tries to set teacher role to a user
- * @param  \ElggUser $user User object
- * @return boolean
- */
-function ychange_make_teacher(\ElggUser &$user)
-{
-    if ( !elgg_is_admin_logged_in() )
-    {
-        return false;
-    }
-
-    $user->teacher = 'yes';
-
-    return $user->save();
-}
-
-/**
- * Tries to remove teacher role from a user
- * @param  \ElggUser $user User object
- * @return boolean
- */
-function ychange_remove_teacher(\ElggUser &$user)
-{
-    if ( !elgg_is_admin_logged_in() )
-    {
-        return false;
-    }
-
-    $user->teacher = 'no';
-
-    return $user->save();
-}
-
-/**
- * Determines if user is allowed to create groups
- * @param  \ElggUser $user User object
- * @return boolean
- */
-function ychange_can_create_groups(\ElggUser $user)
-{
-    return elgg_is_admin_logged_in() || ychange_is_teacher($user);
-}
-
-/**
  * Adds teacher role administration actions to user menu for administrators
  * @param  string $hook  Hook name
  * @param  string $type  Hook type
@@ -320,6 +267,8 @@ function ychange_can_create_groups(\ElggUser $user)
  */
 function ychange_menu_user_hover($hook, $type, $return, $params)
 {
+    elgg_load_library('elgg:ychange:teacher');
+
     if ( elgg_is_admin_logged_in() )
     {
         $user = elgg_extract('entity', $params);
@@ -349,6 +298,8 @@ function ychange_menu_user_hover($hook, $type, $return, $params)
  */
 function ychange_title_menu_handler($hook, $type, $return, $params)
 {
+    elgg_load_library('elgg:ychange:teacher');
+
     if ( elgg_is_logged_in() && elgg_in_context('groups') && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         if ( is_array($return) && count($return) > 0 )
@@ -376,6 +327,8 @@ function ychange_title_menu_handler($hook, $type, $return, $params)
  */
 function ychange_alter_group_add_view($hook, $type, $return, $params)
 {
+    elgg_load_library('elgg:ychange:teacher');
+
     if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
@@ -404,6 +357,8 @@ function ychange_alter_group_add_view($hook, $type, $return, $params)
  */
 function ychange_group_edit_action_hook($hook, $type, $return, $params)
 {
+    elgg_load_library('elgg:ychange:teacher');
+
     if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         return false;
@@ -419,6 +374,7 @@ function ychange_group_edit_action_hook($hook, $type, $return, $params)
 function ychange_init()
 {
     elgg_register_library('elgg:ychange:project', __DIR__ . '/lib/project.php');
+    elgg_register_library('elgg:ychange:teacher', __DIR__ . '/lib/teacher.php');
 
     elgg_extend_view('elgg.css', 'ychange/css');
     elgg_extend_view('elgg.css', 'ychange/front_page/index.css');

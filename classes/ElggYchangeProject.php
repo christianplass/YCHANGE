@@ -54,4 +54,20 @@ class ElggYchangeProject extends ElggObject
 
         return (bool)preg_match('/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/', $location);
     }
+
+    /**
+     * Changes access_id of existing satellite images to match the current one
+     * @return void
+     */
+    public function changeAccessIdForSatelliteImages()
+    {
+        if ( $this->hasSatelliteImages() )
+        {
+            foreach($this->getSatelliteImages() as $image)
+            {
+                $image->access_id = $this->access_id;
+                $image->save();
+            }
+        }
+    }
 }
