@@ -301,6 +301,16 @@ function ychange_remove_teacher(\ElggUser &$user)
 }
 
 /**
+ * Determines if user is allowed to create groups
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_can_create_groups(\ElggUser $user)
+{
+    return elgg_is_admin_logged_in() || ychange_is_teacher($user);
+}
+
+/**
  * Adds teacher role administration actions to user menu for administrators
  * @param  string $hook  Hook name
  * @param  string $type  Hook type
@@ -324,6 +334,79 @@ function ychange_menu_user_hover($hook, $type, $return, $params)
         $menuItem->setConfirmText(true);
 
         $return[] = $menuItem;
+    }
+
+    return $return;
+}
+
+/**
+ * Removed group add button from title menu for normal users
+ * @param  string $hook   Hook name
+ * @param  string $type   Hook type
+ * @param  array  $return An array of menu items
+ * @param  array  $params An array of parameters
+ * @return array          An array of menu items
+ */
+function ychange_title_menu_handler($hook, $type, $return, $params)
+{
+    if ( elgg_is_logged_in() && elgg_in_context('groups') && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
+    {
+        if ( is_array($return) && count($return) > 0 )
+        {
+            foreach ($return as $index => $item)
+            {
+                if ( $item->getName() === 'add' )
+                {
+                    unset($return[$index]);
+                }
+            }
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * Prevent normal user from seeing group ceate page
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $return Returned HTML
+ * @param array $params  An array of parameters
+ * @return string        Returned HTML
+ */
+function ychange_alter_group_add_view($hook, $type, $return, $params)
+{
+    if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
+    {
+        elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+        $title = elgg_echo('groups:add');
+        elgg_push_breadcrumb($title);
+        $params = [
+            'content' => elgg_echo('groups:cantcreate'),
+            'title' => $title,
+            'filter' => '',
+        ];
+        $body = elgg_view_layout('content', $params);
+
+        return elgg_view_page($title, $body);
+    }
+
+    return $return;
+}
+
+/**
+ * Prevent normal user from being able to run groups/edit action
+ * @param  string $hook    Hook name
+ * @param  string $type    Hook type
+ * @param  boolean $return Allowed or not
+ * @param  array $params   An aeeay of parameters
+ * @return boolean
+ */
+function ychange_group_edit_action_hook($hook, $type, $return, $params)
+{
+    if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
+    {
+        return false;
     }
 
     return $return;
@@ -413,4 +496,8 @@ function ychange_init()
     $action_path = __DIR__ . '/actions/admin/user';
     elgg_register_action('admin/user/maketeacher', "$action_path/maketeacher.php", 'admin');
     elgg_register_action('admin/user/removeteacher', "$action_path/removeteacher.php", 'admin');
+
+    elgg_register_plugin_hook_handler('register', 'menu:title', 'ychange_title_menu_handler', 1000);
+    elgg_register_plugin_hook_handler('view', 'resources/groups/add', 'ychange_alter_group_add_view', 1000);
+    elgg_register_plugin_hook_handler('action', 'groups/edit', 'ychange_group_edit_action_hook', 1000);
 }
