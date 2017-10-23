@@ -5,8 +5,6 @@
 * @package Ychange
 */
 
-elgg_load_library('elgg:ychange:teacher');
-
 // Get variables
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 $topic = htmlspecialchars(get_input('topic', '', false), ENT_QUOTES, 'UTF-8');
@@ -16,7 +14,6 @@ $results = get_input('results');
 $sources = get_input('sources');
 $location = htmlspecialchars(get_input('location', '', false), ENT_QUOTES, 'UTF-8');
 $category = get_input('category');
-$access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('guid');
 
@@ -80,24 +77,16 @@ $project->results = $results;
 $project->sources = $sources;
 $project->location = $location;
 $project->category = $category;
-if ( ychange_is_teacher_or_admin_logged_in() )
-{
-    $project->access_id = $access_id;
-}
-else
-{
-    $project->access_id = get_user_access_collections($container_guid)[0]->id;
-}
 $project->container_guid = $container_guid;
 
 if ( $new_project )
 {
+    $project->access_id = get_user_access_collections($container_guid)[0]->id;
     $guid = $project->save();
 }
 else
 {
     $project->save();
-    $project->changeAccessIdForSatelliteImages();
 }
 
 $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));

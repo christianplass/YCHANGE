@@ -46,6 +46,12 @@ return [
     'ychange:project:no_container' => 'Student project has to belong to a group',
     'ychange:project:wrong_container' => 'Student projects can only belong to groups',
     'ychange:project:required_field_missing' => 'At least one of the required fields is missing',
+    'ychange:project:action:publish' => 'Publish',
+    'ychange:project:action:unpublish' => 'Unpublish',
+    'ychange:project:publish:yes' => 'Project is now public.',
+    'ychange:project:publish:no' => 'We could not make this project public.',
+    'ychange:project:unpublish:yes' => 'Project is no longer public.',
+    'ychange:project:unpublish:no' => 'We could not remove this project from public.',
 
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',

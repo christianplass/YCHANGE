@@ -1,4 +1,9 @@
 <?php
+/**
+ * Project class
+ *
+ * @package Ychange
+ */
 
 class ElggYchangeProject extends ElggObject
 {
@@ -69,5 +74,72 @@ class ElggYchangeProject extends ElggObject
                 $image->save();
             }
         }
+    }
+
+    /**
+     * Checks if current user change project access_id
+     * @return boolean
+     */
+    public function canPublishAndUnpublish()
+    {
+        return $this->canEdit() && ( elgg_is_admin_logged_in() || ychange_is_teacher(elgg_get_logged_in_user_entity()) );
+    }
+
+    /**
+     * Make project and attached images public
+     * @return boolean
+     */
+    public function makePublic()
+    {
+        if ( $this->getAccessID() === ACCESS_PUBLIC )
+        {
+            return false;
+        }
+
+        if ( !$this->canPublishAndUnpublish() )
+        {
+            return false;
+        }
+
+        $this->access_id = ACCESS_PUBLIC;
+
+        if ( $this->save() )
+        {
+            elgg_trigger_event('publish', 'project', $this);
+            $this->changeAccessIdForSatelliteImages();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Make project and attached images available only to the group
+     * @return boolean
+     */
+    public function removeFromPublic()
+    {
+        if ( $this->getAccessID() !== ACCESS_PUBLIC )
+        {
+            return false;
+        }
+
+        if ( !$this->canPublishAndUnpublish() )
+        {
+            return false;
+        }
+
+        $this->access_id = get_user_access_collections($this->getContainerGUID())[0]->id;
+
+        if ( $this->save() )
+        {
+            elgg_trigger_event('unpublish', 'project', $this);
+            $this->changeAccessIdForSatelliteImages();
+
+            return true;
+        }
+
+        return false;
     }
 }

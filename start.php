@@ -52,7 +52,6 @@ function ychange_tutorials_page_handler($page)
 function ychange_project_page_handler($page)
 {
     elgg_load_library('elgg:ychange:project');
-    elgg_load_library('elgg:ychange:teacher');
 
     // push all projects breadcrumb
     elgg_push_breadcrumb(elgg_echo('ychange:projects'), 'projects/all');
@@ -267,8 +266,6 @@ function ychange_head($hook, $type, $data)
  */
 function ychange_menu_user_hover($hook, $type, $return, $params)
 {
-    elgg_load_library('elgg:ychange:teacher');
-
     if ( elgg_is_admin_logged_in() )
     {
         $user = elgg_extract('entity', $params);
@@ -298,8 +295,6 @@ function ychange_menu_user_hover($hook, $type, $return, $params)
  */
 function ychange_title_menu_handler($hook, $type, $return, $params)
 {
-    elgg_load_library('elgg:ychange:teacher');
-
     if ( elgg_is_logged_in() && elgg_in_context('groups') && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         if ( is_array($return) && count($return) > 0 )
@@ -327,8 +322,6 @@ function ychange_title_menu_handler($hook, $type, $return, $params)
  */
 function ychange_alter_group_add_view($hook, $type, $return, $params)
 {
-    elgg_load_library('elgg:ychange:teacher');
-
     if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
@@ -357,11 +350,41 @@ function ychange_alter_group_add_view($hook, $type, $return, $params)
  */
 function ychange_group_edit_action_hook($hook, $type, $return, $params)
 {
-    elgg_load_library('elgg:ychange:teacher');
-
     if ( elgg_is_logged_in() && !ychange_can_create_groups(elgg_get_logged_in_user_entity()) )
     {
         return false;
+    }
+
+    return $return;
+}
+
+/**
+ * Handle project entity menu
+ * @param  string $hook   Hook name
+ * @param  string $type   Hook type
+ * @param  array $return  An array of menu items
+ * @param  array $params  An array of parameters
+ * @return array          An array of menu items
+ */
+function ychnage_project_menu_handler($hook, $type, $return, $params)
+{
+    $entity = elgg_extract('entity', $params);
+
+    if ( ( $entity->getSubtype() === 'project' ) && $entity->canPublishAndUnpublish() )
+    {
+        $isPublic = $entity->getAccessID() === ACCESS_PUBLIC;
+
+        $actionName = $isPublic ? 'unpublish' : 'publish';
+        $tooptipText = elgg_echo( $isPublic ? 'ychange:project:action:unpublish' : 'ychange:project:action:publish' );
+        $actionText = '<span class="elgg-icon fa ' . ( $isPublic ? 'fa-eye-slash' : 'fa-eye' ) . '"></span>';
+
+        $actionUrl = elgg_add_action_tokens_to_url('action/project/' . $actionName . '?guid=' . $entity->guid);
+
+        $menuItem = new \ElggMenuItem($actionName, $actionText, $actionUrl);
+        $menuItem->setConfirmText(true);
+        $menuItem->setTooltip($tooptipText);
+
+        $return[] = $menuItem;
     }
 
     return $return;
@@ -375,6 +398,8 @@ function ychange_init()
 {
     elgg_register_library('elgg:ychange:project', __DIR__ . '/lib/project.php');
     elgg_register_library('elgg:ychange:teacher', __DIR__ . '/lib/teacher.php');
+
+    elgg_load_library('elgg:ychange:teacher');
 
     elgg_extend_view('elgg.css', 'ychange/css');
     elgg_extend_view('elgg.css', 'ychange/front_page/index.css');
@@ -409,6 +434,8 @@ function ychange_init()
     $action_path = __DIR__ . '/actions/project';
     elgg_register_action('project/save', "$action_path/save.php");
     elgg_register_action('project/delete', "$action_path/delete.php");
+    elgg_register_action('project/publish', "$action_path/publish.php");
+    elgg_register_action('project/unpublish', "$action_path/unpublish.php");
 
     elgg_register_plugin_hook_handler('likes:is_likable', 'object:project', 'Elgg\Values::getTrue');
 
@@ -456,6 +483,7 @@ function ychange_init()
     elgg_register_plugin_hook_handler('register', 'menu:title', 'ychange_title_menu_handler', 1000);
     elgg_register_plugin_hook_handler('view', 'resources/groups/add', 'ychange_alter_group_add_view', 1000);
     elgg_register_plugin_hook_handler('action', 'groups/edit', 'ychange_group_edit_action_hook', 1000);
+    elgg_register_plugin_hook_handler('register', 'menu:entity', 'ychnage_project_menu_handler');
 
     elgg_register_admin_menu_item('administer', 'teachers', 'users', 25);
 }

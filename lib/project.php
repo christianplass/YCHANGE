@@ -228,7 +228,6 @@ function ychange_project_prepare_form_vars($project = NULL) {
 		'results' => NULL,
 		'sources' => NULL,
 		'location' => NULL,
-		'access_id' => get_user_access_collections(elgg_get_page_owner_guid())[0]->id,
 		'category' => NULL,
 		'container_guid' => NULL,
 		'guid' => NULL,

@@ -38,7 +38,14 @@ function ychange_make_teacher(\ElggUser &$user)
 
     $user->teacher = 'yes';
 
-    return $user->save();
+    if ( $user->save() )
+    {
+        elgg_trigger_event('add:role:teacher', 'user', $user);
+
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -55,7 +62,14 @@ function ychange_remove_teacher(\ElggUser &$user)
 
     $user->teacher = 'no';
 
-    return $user->save();
+    if ( $user->save() )
+    {
+        elgg_trigger_event('remove:role:teacher', 'user', $user);
+
+        return true;
+    }
+
+    return false;
 }
 
 /**
