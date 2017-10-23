@@ -62,9 +62,11 @@ return [
     'ychange:admin:user:maketeacher:no' => 'We could not make this user a teacher.',
     'ychange:admin:user:removeteacher:yes' => 'User is no longer a teacher.',
     'ychange:admin:user:removeteacher:no' => 'We could not remove teacher privileges from this user.',
+    'ychange:admin:statistics:label:teachers' => 'Teachers',
 
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
     'item:object:satellite_image' => 'Satellite images',
     'projects:add' => 'Add a student project',
+    'admin:users:teachers' => 'Teachers',
 ];

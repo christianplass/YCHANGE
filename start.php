@@ -456,4 +456,6 @@ function ychange_init()
     elgg_register_plugin_hook_handler('register', 'menu:title', 'ychange_title_menu_handler', 1000);
     elgg_register_plugin_hook_handler('view', 'resources/groups/add', 'ychange_alter_group_add_view', 1000);
     elgg_register_plugin_hook_handler('action', 'groups/edit', 'ychange_group_edit_action_hook', 1000);
+
+    elgg_register_admin_menu_item('administer', 'teachers', 'users', 25);
 }
