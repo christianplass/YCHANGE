@@ -280,6 +280,15 @@ function ychange_menu_user_hover($hook, $type, $return, $params)
         $menuItem->setConfirmText(true);
 
         $return[] = $menuItem;
+
+        if ( $user->request_teacher === 'yes' )
+        {
+            $rejectMenuItem = new \ElggMenuItem('rejectteacher', elgg_echo('ychange:user:action:reject:teacher'), elgg_add_action_tokens_to_url('action/admin/user/rejectteacher?guid=' . $user->guid));
+            $rejectMenuItem->setSection('admin');
+            $rejectMenuItem->setConfirmText(true);
+
+            $return[] = $rejectMenuItem;
+        }
     }
 
     return $return;
@@ -391,6 +400,33 @@ function ychnage_project_menu_handler($hook, $type, $return, $params)
 }
 
 /**
+ * Handle user registration
+ * @param  string  $hook   Hook name
+ * @param  string  $type   Hook type
+ * @param  boolean $return Allow or prevent registration
+ * @param  array $params   An array of parameters
+ * @return boolean         The same value as before, we do not prevent registration
+ */
+function ychange_register_user($hook, $type, $return, $params)
+{
+    $user = elgg_extract('user', $params);
+    $values = elgg_get_sticky_values('register');
+
+    $user->gender = elgg_extract('gender', $values);
+    $user->location = elgg_extract('location', $values);
+    $user->class_grade = elgg_extract('class_grade', $values);
+
+    if ( elgg_extract('request_teacher', $values) === 'yes' )
+    {
+        $user->request_teacher = 'yes';
+    }
+
+    $user->save();
+
+    return $return;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -479,6 +515,7 @@ function ychange_init()
     $action_path = __DIR__ . '/actions/admin/user';
     elgg_register_action('admin/user/maketeacher', "$action_path/maketeacher.php", 'admin');
     elgg_register_action('admin/user/removeteacher', "$action_path/removeteacher.php", 'admin');
+    elgg_register_action('admin/user/rejectteacher', "$action_path/rejectteacher.php", 'admin');
 
     elgg_register_plugin_hook_handler('register', 'menu:title', 'ychange_title_menu_handler', 1000);
     elgg_register_plugin_hook_handler('view', 'resources/groups/add', 'ychange_alter_group_add_view', 1000);
@@ -486,4 +523,8 @@ function ychange_init()
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'ychnage_project_menu_handler');
 
     elgg_register_admin_menu_item('administer', 'teachers', 'users', 25);
+    elgg_register_admin_menu_item('administer', 'teacher_requests', 'users', 26);
+
+    elgg_extend_view('register/extend', 'ychange/register');
+    elgg_register_plugin_hook_handler('register', 'user', 'ychange_register_user');
 }

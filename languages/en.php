@@ -52,6 +52,19 @@ return [
     'ychange:project:publish:no' => 'We could not make this project public.',
     'ychange:project:unpublish:yes' => 'Project is no longer public.',
     'ychange:project:unpublish:no' => 'We could not remove this project from public.',
+    'ychange:request:teacher:role' => 'Request teacher role',
+    'ychange:gender' => 'Gender',
+    'ychange:location' => 'Location',
+    'ychange:class_grade' => 'Class grade',
+
+    'ychange:gender:male' => 'Male',
+    'ychange:gender:female' => 'Female',
+    'ychange:gender:other' => 'Other',
+
+    'ychange:location:germany' => 'Germany',
+    'ychange:location:czech' => 'Czech Republic',
+    'ychange:location:estonia' => 'Estonia',
+    'ychange:location:switzerland' => 'Switzerland',
 
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',
@@ -69,10 +82,15 @@ return [
     'ychange:admin:user:removeteacher:yes' => 'User is no longer a teacher.',
     'ychange:admin:user:removeteacher:no' => 'We could not remove teacher privileges from this user.',
     'ychange:admin:statistics:label:teachers' => 'Teachers',
+    'ychange:admin:statistics:label:teacher_requests' => 'Teacher requests',
+    'ychange:user:action:reject:teacher' => 'Reject teacher request',
+    'ychange:admin:user:rejectteacher:yes' => 'Teacher request rejected.',
+    'ychange:admin:user:rejectteacher:no' => 'We could not remove teacher request for this user.',
 
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
     'item:object:satellite_image' => 'Satellite images',
     'projects:add' => 'Add a student project',
     'admin:users:teachers' => 'Teachers',
+    'admin:users:teacher_requests' => 'Teacher requests',
 ];

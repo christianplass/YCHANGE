@@ -81,3 +81,37 @@ function ychange_can_create_groups(\ElggUser $user)
 {
     return elgg_is_admin_logged_in() || ychange_is_teacher($user);
 }
+
+/**
+ * Determines if current user has teacher request associated
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_has_teacher_request(\ElggUser &$user)
+{
+    return $user->request_teacher === 'yes';
+}
+
+/**
+ * Tries to remove teacher request flag
+ * @param  \ElggUser $user User object
+ * @return boolean
+ */
+function ychange_reject_teacher_request(\ElggUser &$user)
+{
+    if ( !elgg_is_admin_logged_in() )
+    {
+        return false;
+    }
+
+    if ( !ychange_has_teacher_request($user) )
+    {
+        return false;
+    }
+
+    $user->deleteMetadata('request_teacher');
+
+    elgg_trigger_event('reject:teacher:role:request', 'user', $user);
+
+    return true;
+}
