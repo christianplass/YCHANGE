@@ -115,3 +115,25 @@ function ychange_reject_teacher_request(\ElggUser &$user)
 
     return true;
 }
+
+/**
+ * Determine if there are any unhandled teacher requests
+ * @return boolean
+ */
+function ychnage_has_teacher_requests()
+{
+    static $count;
+
+    if ( $count === null )
+    {
+        $count = elgg_get_entities_from_metadata([
+            'type' => 'user',
+            'subtype' => null,
+            'metadata_names' => ['request_teacher'],
+            'metadata_values' => ['yes'],
+            'count' => true,
+        ]);
+    }
+
+    return $count > 0;
+}

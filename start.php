@@ -527,4 +527,16 @@ function ychange_init()
 
     elgg_extend_view('register/extend', 'ychange/register');
     elgg_register_plugin_hook_handler('register', 'user', 'ychange_register_user');
+
+    if ( ychnage_has_teacher_requests() )
+    {
+        elgg_add_admin_notice('unhandled_teacher_requests', elgg_echo('ychange:unhandled:teacher:requests:present', [elgg_normalize_url('admin/users/teacher_requests')]));
+    }
+    else
+    {
+        if ( elgg_admin_notice_exists('unhandled_teacher_requests') )
+        {
+            elgg_delete_admin_notice('unhandled_teacher_requests');
+        }
+    }
 }
