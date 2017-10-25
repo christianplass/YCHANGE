@@ -8,7 +8,7 @@
 $project_guid = get_input('guid');
 $project = get_entity($project_guid);
 
-if ( elgg_instanceof($project, 'object', 'project') && $project->canEdit() )
+if ( elgg_instanceof($project, 'object', 'project') && $project->canDelete() )
 {
     $container = get_entity($project->container_guid);
     if ( $project->delete() )

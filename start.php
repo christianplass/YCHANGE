@@ -427,6 +427,29 @@ function ychange_register_user($hook, $type, $return, $params)
 }
 
 /**
+ * Override Project delete permission
+ * Permission is given to admins, owner and any teacher that is part of the group
+ * @param  string  $hook   Hook name
+ * @param  string  $type   Hook type
+ * @param  boolean $return Allow or not
+ * @param  array  $params  Array of parameters
+ * @return boolean
+ */
+function ychnage_project_delete_hook($hook, $type, $return, $params)
+{
+    $project = elgg_extract('entity', $params);
+    $user = elgg_extract('user', $params);
+    $group = $project->getOwnerEntity();
+
+    if ( ( $user instanceof \ElggUser) && ( $user->isAdmin() || ( $project->getOwnerGUID() === $user->getGUID() ) || ( $group->isMember($user) && ychnage_is_teacher($user) ) ) )
+    {
+        return true;
+    }
+
+    return false;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -474,6 +497,7 @@ function ychange_init()
     elgg_register_action('project/unpublish', "$action_path/unpublish.php");
 
     elgg_register_plugin_hook_handler('likes:is_likable', 'object:project', 'Elgg\Values::getTrue');
+    elgg_register_plugin_hook_handler('permissions_check:delete', 'object', 'ychnage_project_delete_hook');
 
     elgg_register_js('recaptcha', RECAPTCHA_JS_URL, 'head');
     elgg_register_plugin_hook_handler("action", "register", "ychange_captcha_verify_action_hook");
