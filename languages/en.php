@@ -57,6 +57,7 @@ return [
     'ychange:location' => 'Location',
     'ychange:class_grade' => 'Class grade',
     'ychange:unhandled:teacher:requests:present' => 'There are <a href="%s">teacher requests</a> that require a review!',
+    'ychange:role:teacher' => 'Teacher',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',

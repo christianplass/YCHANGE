@@ -539,4 +539,6 @@ function ychange_init()
             elgg_delete_admin_notice('unhandled_teacher_requests');
         }
     }
+
+    elgg_extend_view('profile/status', 'ychange/profile/status');
 }
