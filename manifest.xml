@@ -34,6 +34,10 @@
         <type>plugin</type>
         <name>groups</name>
     </requires>
+    <requires>
+        <type>plugin</type>
+        <name>profile</name>
+    </requires>
     <conflicts>
         <type>plugin</type>
         <name>custom_index</name>
