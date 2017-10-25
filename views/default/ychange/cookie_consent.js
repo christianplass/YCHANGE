@@ -3,11 +3,7 @@ define(function(require) {
 
     var cookieConsentKey = 'cookie:consent';
     var cookieConsentElement = $('#ychange-cookie-consent');
-    var hasGivenConsent = false;
-
-    if ( window.localStorage && window.localStorage.getItem(cookieConsentKey) === 'true' ) {
-        hasGivenConsent = true;
-    }
+    var hasGivenConsent = window.localStorage && window.localStorage.getItem(cookieConsentKey) === 'true';
 
     if ( !hasGivenConsent ) {
         cookieConsentElement.slideDown();
