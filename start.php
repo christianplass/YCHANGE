@@ -565,4 +565,6 @@ function ychange_init()
     }
 
     elgg_extend_view('profile/status', 'ychange/profile/status');
+
+    elgg_extend_view('page/elements/footer', 'ychange/cookie_consent');
 }

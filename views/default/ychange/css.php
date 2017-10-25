@@ -119,3 +119,27 @@ a {
     color: red;
     vertical-align: middle;
 }
+
+#ychange-cookie-consent {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #424242;
+    border-top: 1px solid #424242;
+    padding: 10px 20px;
+    color: #ccc;
+}
+
+#ychange-cookie-consent a {
+    color: #fff;
+}
+
+#ychange-cookie-consent a:hover {
+    color: #fff;
+}
+
+#ychange-cookie-consent input[type="button"] {
+    margin-right: 40px;
+}

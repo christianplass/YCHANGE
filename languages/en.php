@@ -58,6 +58,8 @@ return [
     'ychange:class_grade' => 'Class grade',
     'ychange:unhandled:teacher:requests:present' => 'There are <a href="%s">teacher requests</a> that require a review!',
     'ychange:role:teacher' => 'Teacher',
+    'ychange:cookie_consent' => 'This website uses cookies to ensure you get the best possible online experience. By continuing to use our website, you agree to the terms of our <a href="%s">Privacy Policy</a>.',
+    'ychnage:cookie_consent:agree' => 'Agree',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
