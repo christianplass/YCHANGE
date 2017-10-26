@@ -566,10 +566,11 @@ function ychange_init()
     elgg_register_plugin_hook_handler("action", "register", "ychange_captcha_verify_action_hook");
     elgg_register_plugin_hook_handler("action", "user/requestnewpassword", "ychange_captcha_verify_action_hook");
 
+    $recaptchaKey = elgg_get_plugin_setting('recaptcha_key', 'ychange');
+    $recaptchaSecret = elgg_get_plugin_setting('recaptcha_secret', 'ychange');
+    $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
     if ( elgg_is_admin_logged_in() && elgg_get_context() === 'admin' ) {
         // Manage admin message if required configurations are missing
-        $recaptchaKey = elgg_get_plugin_setting('recaptcha_key', 'ychange');
-        $recaptchaSecret = elgg_get_plugin_setting('recaptcha_secret', 'ychange');
         if ( empty($recaptchaKey) || empty($recaptchaSecret) )
         {
             elgg_add_admin_notice('recaptcha_settings_missing', elgg_echo('ychange:recaptcha:settings:missing'));
@@ -582,7 +583,6 @@ function ychange_init()
             }
         }
 
-        $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
         if ( empty($googleMapsKey) )
         {
             elgg_add_admin_notice('google_maps_settings_missing', elgg_echo('ychange:google:maps:settings:missing'));
