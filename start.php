@@ -471,6 +471,14 @@ function ychange_user_profile_fields_handler($hook, $type, $return)
     ];
 }
 
+/**
+ * User entity menu override
+ * @param  string $hook   Hook name
+ * @param  string $type   Hook type
+ * @param  array  $return An array of menu items
+ * @param  array  $params An array of parameters
+ * @return array          An array of menu items
+ */
 function ychange_user_entity_menu_handler($hook, $type, $return, $params)
 {
     if ( elgg_in_context('widgets') )
@@ -558,31 +566,45 @@ function ychange_init()
     elgg_register_plugin_hook_handler("action", "register", "ychange_captcha_verify_action_hook");
     elgg_register_plugin_hook_handler("action", "user/requestnewpassword", "ychange_captcha_verify_action_hook");
 
-    // Manage admin message if required configurations are missing
-    $recaptchaKey = elgg_get_plugin_setting('recaptcha_key', 'ychange');
-    $recaptchaSecret = elgg_get_plugin_setting('recaptcha_secret', 'ychange');
-    if ( empty($recaptchaKey) || empty($recaptchaSecret) )
-    {
-        elgg_add_admin_notice('recaptcha_settings_missing', elgg_echo('ychange:recaptcha:settings:missing'));
-    }
-    else
-    {
-        if ( elgg_admin_notice_exists('recaptcha_settings_missing') )
+    if ( elgg_is_admin_logged_in() && elgg_get_context() === 'admin' ) {
+        // Manage admin message if required configurations are missing
+        $recaptchaKey = elgg_get_plugin_setting('recaptcha_key', 'ychange');
+        $recaptchaSecret = elgg_get_plugin_setting('recaptcha_secret', 'ychange');
+        if ( empty($recaptchaKey) || empty($recaptchaSecret) )
         {
-            elgg_delete_admin_notice('recaptcha_settings_missing');
+            elgg_add_admin_notice('recaptcha_settings_missing', elgg_echo('ychange:recaptcha:settings:missing'));
         }
-    }
-
-    $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
-    if ( empty($googleMapsKey) )
-    {
-        elgg_add_admin_notice('google_maps_settings_missing', elgg_echo('ychange:google:maps:settings:missing'));
-    }
-    else
-    {
-        if ( elgg_admin_notice_exists('google_maps_settings_missing') )
+        else
         {
-            elgg_delete_admin_notice('google_maps_settings_missing');
+            if ( elgg_admin_notice_exists('recaptcha_settings_missing') )
+            {
+                elgg_delete_admin_notice('recaptcha_settings_missing');
+            }
+        }
+
+        $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
+        if ( empty($googleMapsKey) )
+        {
+            elgg_add_admin_notice('google_maps_settings_missing', elgg_echo('ychange:google:maps:settings:missing'));
+        }
+        else
+        {
+            if ( elgg_admin_notice_exists('google_maps_settings_missing') )
+            {
+                elgg_delete_admin_notice('google_maps_settings_missing');
+            }
+        }
+
+        if ( ychnage_has_teacher_requests() )
+        {
+            elgg_add_admin_notice('unhandled_teacher_requests', elgg_echo('ychange:unhandled:teacher:requests:present', [elgg_normalize_url('admin/users/teacher_requests')]));
+        }
+        else
+        {
+            if ( elgg_admin_notice_exists('unhandled_teacher_requests') )
+            {
+                elgg_delete_admin_notice('unhandled_teacher_requests');
+            }
         }
     }
     elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
@@ -606,19 +628,6 @@ function ychange_init()
 
     elgg_extend_view('register/extend', 'ychange/register');
     elgg_register_plugin_hook_handler('register', 'user', 'ychange_register_user');
-
-    // TODO Might make sense to check if admin is logged in
-    if ( ychnage_has_teacher_requests() )
-    {
-        elgg_add_admin_notice('unhandled_teacher_requests', elgg_echo('ychange:unhandled:teacher:requests:present', [elgg_normalize_url('admin/users/teacher_requests')]));
-    }
-    else
-    {
-        if ( elgg_admin_notice_exists('unhandled_teacher_requests') )
-        {
-            elgg_delete_admin_notice('unhandled_teacher_requests');
-        }
-    }
 
     elgg_extend_view('profile/status', 'ychange/profile/status');
 
