@@ -377,6 +377,11 @@ function ychange_group_edit_action_hook($hook, $type, $return, $params)
  */
 function ychnage_project_menu_handler($hook, $type, $return, $params)
 {
+    if ( elgg_in_context('widgets') )
+    {
+        return $return;
+    }
+
     $entity = elgg_extract('entity', $params);
 
     if ( ( $entity->getSubtype() === 'project' ) && $entity->canPublishAndUnpublish() )
@@ -464,6 +469,38 @@ function ychange_user_profile_fields_handler($hook, $type, $return)
         'location' => 'partner',
         'class_grade' => 'class_grade',
     ];
+}
+
+function ychange_user_entity_menu_handler($hook, $type, $return, $params)
+{
+    if ( elgg_in_context('widgets') )
+    {
+        return $return;
+    }
+
+    $entity = elgg_extract('entity', $params);
+    if ( !elgg_instanceof($entity, 'user') )
+    {
+        return $return;
+    }
+
+    if ( !$entity->isBanned() )
+    {
+        if ( $return && is_array($return) && count($return) > 0)
+        {
+            array_walk($return, function(&$item) use ($entity)
+            {
+                if ( $item->getName() === 'location' )
+                {
+                    $item->setText(elgg_view('output/partner', [
+                        'value' => $entity->location,
+                    ]));
+                }
+            });
+        }
+    }
+
+    return $return;
 }
 
 /**
@@ -570,6 +607,7 @@ function ychange_init()
     elgg_extend_view('register/extend', 'ychange/register');
     elgg_register_plugin_hook_handler('register', 'user', 'ychange_register_user');
 
+    // TODO Might make sense to check if admin is logged in
     if ( ychnage_has_teacher_requests() )
     {
         elgg_add_admin_notice('unhandled_teacher_requests', elgg_echo('ychange:unhandled:teacher:requests:present', [elgg_normalize_url('admin/users/teacher_requests')]));
@@ -585,6 +623,7 @@ function ychange_init()
     elgg_extend_view('profile/status', 'ychange/profile/status');
 
     elgg_register_plugin_hook_handler('profile:fields', 'profile', 'ychange_user_profile_fields_handler');
+    elgg_register_plugin_hook_handler('register', 'menu:entity', 'ychange_user_entity_menu_handler', 1000);
 
     elgg_extend_view('page/elements/footer', 'ychange/cookie_consent');
 }
