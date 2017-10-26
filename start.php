@@ -450,6 +450,23 @@ function ychnage_project_delete_hook($hook, $type, $return, $params)
 }
 
 /**
+ * Pverride user pofile fields
+ * @param  string $hook   Hook name
+ * @param  string $type   Hook type
+ * @param  array  $return An array of fields
+ * @return array          An array of fields
+ */
+function ychange_user_profile_fields_handler($hook, $type, $return)
+{
+    return [
+        'description' => 'longtext',
+        'gender' => 'gender',
+        'location' => 'partner',
+        'class_grade' => 'class_grade',
+    ];
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -457,6 +474,7 @@ function ychange_init()
 {
     elgg_register_library('elgg:ychange:project', __DIR__ . '/lib/project.php');
     elgg_register_library('elgg:ychange:teacher', __DIR__ . '/lib/teacher.php');
+    elgg_register_library('elgg:ychange:options', __DIR__ . '/lib/options.php');
 
     elgg_load_library('elgg:ychange:teacher');
 
@@ -565,6 +583,8 @@ function ychange_init()
     }
 
     elgg_extend_view('profile/status', 'ychange/profile/status');
+
+    elgg_register_plugin_hook_handler('profile:fields', 'profile', 'ychange_user_profile_fields_handler');
 
     elgg_extend_view('page/elements/footer', 'ychange/cookie_consent');
 }

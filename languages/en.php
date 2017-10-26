@@ -97,4 +97,6 @@ return [
     'projects:add' => 'Add a student project',
     'admin:users:teachers' => 'Teachers',
     'admin:users:teacher_requests' => 'Teacher requests',
+    'profile:gender' => 'Gender',
+    'profile:class_grade' => 'Class grade',
 ];

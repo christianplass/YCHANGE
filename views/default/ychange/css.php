@@ -143,3 +143,7 @@ a {
 #ychange-cookie-consent input[type="button"] {
     margin-right: 40px;
 }
+
+#profile-location {
+    display: block;
+}

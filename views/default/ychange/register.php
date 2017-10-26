@@ -5,16 +5,14 @@
  * @package Ychange
  */
 
+elgg_load_library('elgg:ychange:options');
+
 $fields = [
     [
         '#type' => 'radio',
         '#label' => elgg_echo('ychange:gender'),
         'name' => 'gender',
-        'options' => [
-            elgg_echo('ychange:gender:male') => 'male',
-            elgg_echo('ychange:gender:female') => 'female',
-            elgg_echo('ychange:gender:other') => 'other',
-        ],
+        'options' => ychange_get_gender_options(true),
         'align' => 'horizontal',
         'required' => true,
         'value' => elgg_extract('gender', $vars, 'male'),
@@ -23,12 +21,7 @@ $fields = [
         '#type' => 'dropdown',
         '#label' => elgg_echo('ychange:location'),
         'name' => 'location',
-        'options_values' => [
-            'germany' => elgg_echo('ychange:location:germany'),
-            'czech' => elgg_echo('ychange:location:czech'),
-            'estonia' => elgg_echo('ychange:location:estonia'),
-            'switzerland' => elgg_echo('ychange:location:switzerland'),
-        ],
+        'options_values' => ychange_get_partner_options(),
         'required' => true,
         'value' => elgg_extract('location', $vars),
     ],
