@@ -40,7 +40,7 @@ return [
     'ychange:project:notsaved' => 'Could not save the student project',
     'ychange:project:archives' => 'Archives',
     'ychange:project:error:cannot_edit_project' => 'You are not allowed to change this student project',
-    'ychange:project:group' => 'Group  studnet projects',
+    'ychange:project:group' => 'Group  student projects',
     'ychange:upload_limit' => 'Maximum allowed file size is %s',
     'ychange:post_limit' => 'Maximum allowed total upload size is %s',
     'ychange:project:no_container' => 'Student project has to belong to a group',
