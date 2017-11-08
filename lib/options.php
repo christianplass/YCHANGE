@@ -37,3 +37,22 @@ function ychange_get_partner_options($flip = false)
 
     return $flip ? array_flip($options) : $options;
 }
+
+/**
+ * Return class grade options
+ * @param  boolean $flip Should the keys and values be exchanged
+ * @return array         An array of options
+ */
+function ychange_get_class_grade_options($flip = false)
+{
+    $options = [];
+
+    foreach ( range(1, 12) as $grade )
+    {
+        $options[$grade] = $grade;
+    }
+
+    $options['other'] = elgg_echo('ychange:class_grade:other');
+
+    return $flip ? array_flip($options) : $options;
+}

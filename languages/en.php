@@ -71,6 +71,8 @@ return [
     'ychange:location:estonia' => 'Estonia',
     'ychange:location:switzerland' => 'Switzerland',
 
+    'ychange:class_grade:other' => 'Other',
+
     'ychange:project:category:biodiversity_and_sustainability' => 'Biodiversity and Ecosystem Sustainability',
     'ychange:project:category:disaster_resilience' => 'Disaster Resilience',
     'ychange:project:category:energy_and_resources_management' => 'Energy and Mineral Resources Management',

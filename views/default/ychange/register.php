@@ -26,13 +26,12 @@ $fields = [
         'value' => elgg_extract('location', $vars),
     ],
     [
-        '#type' => 'number',
+        '#type' => 'dropdown',
         '#label' => elgg_echo('ychange:class_grade'),
         'name' => 'class_grade',
-        'min' => 0,
-        'max' => 12,
+        'options_values' => ychange_get_class_grade_options(),
         'required' => true,
-        'value' => elgg_extract('class_grade', $vars, ''),
+        'value' => elgg_extract('class_grade', $vars),
     ],
     [
         '#type' => 'checkbox', // Teacher, student

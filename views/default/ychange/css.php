@@ -144,6 +144,6 @@ a {
     margin-right: 40px;
 }
 
-#profile-location {
+#profile-location, #profile-class_grade {
     display: block;
 }

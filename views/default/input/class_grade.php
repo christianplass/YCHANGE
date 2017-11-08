@@ -5,11 +5,12 @@
  * @package Ychange
  */
 
+elgg_load_library('elgg:ychange:options');
+
 $defaults = [
-    'min' => 0,
-    'max' => 12,
+    'options_values' => ychange_get_class_grade_options(),
     'required' => true,
 ];
 $vars = array_merge($defaults, $vars);
 
-echo elgg_view('input/number', $vars);
+echo elgg_view('input/dropdown', $vars);
