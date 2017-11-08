@@ -12,6 +12,7 @@ return [
     'ychange:setting:recaptcha:key' => 'reCaptcha site key',
     'ychange:setting:recaptcha:secret' => 'reCaptcha secret',
     'ychange:setting:google:maps:key' => 'Google Maps JavaScript API key (make sure to enable both JavaScript and Static APIs)',
+    'ychange:setting:google:analytics:key' => 'Google Analytics Tracking Id',
     'ychange:recaptcha:settings:missing' => 'Plase make sure that reCaptcha settings for site key and secret are set!',
     'ychange:google:maps:settings:missing' => 'Please make sure that Google Maps API key is set!',
     'ychange:projects' => 'Student projects',

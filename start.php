@@ -4,6 +4,7 @@ define('RECAPTCHA_JS_URL', 'https://www.google.com/recaptcha/api.js');
 define('RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
 define('GOOGLE_MAPS_JS_URL', 'https://maps.googleapis.com/maps/api/js?key=');
 define('GOOGLE_MAPS_STATIC_URL', 'https://maps.googleapis.com/maps/api/staticmap?center=');
+define('GOOGLE_ANALYTICS_JS_URL', 'https://www.googletagmanager.com/gtag/js?id=');
 
 // Register plugin initialization hook
 elgg_register_event_handler('init', 'system', 'ychange_init');
@@ -519,6 +520,26 @@ function ychange_user_entity_menu_handler($hook, $type, $return, $params)
 }
 
 /**
+ * Configure JS with specific data
+ * @param  string $hook   Hook name
+ * @param  string $type   Hook type
+ * @param  array  $value  An array of data settings
+ * @param  array  $params An array of parameters
+ * @return array          Extended array of values
+ */
+function ychange_config_site($hook, $type, $value, $params)
+{
+    $googleAnalyticsKey = elgg_get_plugin_setting('google_analytics_key', 'ychange');
+
+    if ( $googleAnalyticsKey )
+    {
+        $value['ychange']['analytics']['key'] = $googleAnalyticsKey;
+    }
+
+    return $value;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -615,6 +636,15 @@ function ychange_init()
         }
     }
     elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
+
+    $googleAnalyticsKey = elgg_get_plugin_setting('google_analytics_key', 'ychange');
+    if ( $googleAnalyticsKey )
+    {
+        elgg_register_plugin_hook_handler('elgg.data', 'site', 'ychange_config_site');
+        elgg_register_js('googleAnalytics', GOOGLE_ANALYTICS_JS_URL . $googleAnalyticsKey, 'head');
+        elgg_load_js('googleAnalytics');
+        elgg_require_js('ychange/google_analytics');
+    }
 
     elgg_register_plugin_hook_handler('head', 'page', 'ychange_head');
 
