@@ -442,16 +442,23 @@ function ychange_register_user($hook, $type, $return, $params)
  */
 function ychnage_project_delete_hook($hook, $type, $return, $params)
 {
-    $project = elgg_extract('entity', $params);
+    $entity = elgg_extract('entity', $params);
     $user = elgg_extract('user', $params);
-    $group = $project->getOwnerEntity();
+    $container = $entity->getContainerEntity();
 
-    if ( ( $user instanceof \ElggUser ) && !$user->isBanned() && ( $user->isAdmin() || ( $project->getOwnerGUID() === $user->getGUID() ) || ( ( $group instanceof \ElggGroup ) && $group->isMember($user) && ychnage_is_teacher($user) ) ) )
+    if ( elgg_instanceof($entity, 'object', 'project') )
     {
-        return true;
+        if ( elgg_instanceof($user, 'user') && !$user->isBanned()
+            && ( ( $user->isAdmin() || ( $entity->getOwnerGUID() === $user->getGUID() ) )
+            || ( elgg_instanceof($container, 'group') && $container->isMember($user) && ychange_is_teacher($user) ) )
+        )
+        {
+            return true;
+        }
+        return false;
     }
 
-    return false;
+    return $return;
 }
 
 /**
