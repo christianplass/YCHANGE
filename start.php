@@ -446,7 +446,7 @@ function ychnage_project_delete_hook($hook, $type, $return, $params)
     $user = elgg_extract('user', $params);
     $group = $project->getOwnerEntity();
 
-    if ( ( $user instanceof \ElggUser) && !$user->isBanned() && ( $user->isAdmin() || ( $project->getOwnerGUID() === $user->getGUID() ) || ( $group->isMember($user) && ychnage_is_teacher($user) ) ) )
+    if ( ( $user instanceof \ElggUser ) && !$user->isBanned() && ( $user->isAdmin() || ( $project->getOwnerGUID() === $user->getGUID() ) || ( ( $group instanceof \ElggGroup ) && $group->isMember($user) && ychnage_is_teacher($user) ) ) )
     {
         return true;
     }
