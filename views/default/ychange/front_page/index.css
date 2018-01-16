@@ -13,7 +13,7 @@
     text-align: center;
 }
 
-.ychange-index-logo > img {
+.ychange-index-logo > img, .ychange-index-logo > a > img {
     width: 99%;
     height: auto;
 }
