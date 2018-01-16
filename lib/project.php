@@ -278,6 +278,7 @@ function ychange_project_categories_options()
 		'public_health_surveillance' => elgg_echo('ychange:project:category:public_health_surveillance'),
 		'sustainable_urban_development' => elgg_echo('ychange:project:category:sustainable_urban_development'),
 		'water_resources_management' => elgg_echo('ychange:project:category:water_resources_management'),
+		'other' => elgg_echo('ychange:project:category:other'),
 	];
 }
 
