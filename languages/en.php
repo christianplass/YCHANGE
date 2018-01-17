@@ -7,7 +7,7 @@ return [
     'ychange:index:partners' => 'Partners',
     'ychange:index:sponsors' => 'Sponsors',
     'ychange:index:contact' => 'Contact',
-    'ychange:site:menu:video_tutorials' => 'Video tutorials',
+    'ychange:site:menu:video_tutorials' => 'Tutorials',
     'ychange:captcha:captchafail' => 'Missing or incorrect captcha response',
     'ychange:setting:recaptcha:key' => 'reCaptcha site key',
     'ychange:setting:recaptcha:secret' => 'reCaptcha secret',

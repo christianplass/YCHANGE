@@ -147,3 +147,15 @@ a {
 #profile-location, #profile-class_grade {
     display: block;
 }
+
+.ychange-tutorials a i.fa {
+    margin-right: 5px;
+}
+
+.ychange-tutorials a i.fa:before {
+    font-size: 120%;
+}
+
+.ychange-tutorials a i.fa-youtube:before {
+    color: #FF0000;
+}

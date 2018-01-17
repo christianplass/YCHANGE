@@ -31,12 +31,23 @@ define(function(require) {
         return false;
     }
 
+    function addIcon(element, iconClass) {
+        $('<i>')
+            .addClass('fa')
+            .addClass(iconClass)
+            .attr('aria-hidden', 'true')
+            .prependTo(element);
+    }
+
     $('.elgg-page-body .elgg-output a').each(function(index, node) {
         var element = $(node);
 
         if ( isEmbeddableVideo( element.attr('href') ) ) {
             element.addClass('ychange-video-tutorial');
             replaceEmbeddableVideoUrl(element);
+            addIcon(element, 'fa-youtube');
+        } else {
+            addIcon(element, 'fa-info-circle');
         }
     });
 
