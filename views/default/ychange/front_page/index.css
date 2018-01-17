@@ -25,3 +25,8 @@
         width: 100%;
     }
 }
+
+.ychange-index .elgg-module.ychange-content-language-disclaimer {
+    font-weight: bold;
+    text-align: center;
+}

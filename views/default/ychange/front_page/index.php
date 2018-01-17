@@ -4,9 +4,17 @@
  */
 
 $mod_params = ['class' => 'elgg-module-highlight'];
+$disclaimer_mod_params = $mod_params;
+$disclaimer_mod_params['class'] .= ' ychange-content-language-disclaimer';
 ?>
 
 <div class="ychange-index elgg-main elgg-grid clearfix">
+    <div class="elgg-col">
+        <?php echo elgg_view_module('featured', '', elgg_echo('ychange:index:content_language_disclaimer'), $disclaimer_mod_params); ?>
+    </div>
+
+    <div class="clearfloat"></div>
+
     <div class="elgg-col elgg-col-1of3 ychange-index-col1">
         <div class="elgg-inner pvm">
             <?php echo elgg_view_module('featured', elgg_echo('ychange:index:about'), elgg_view('output/longtext', ['value' => $vars['pages']['about']]), $mod_params); ?>
