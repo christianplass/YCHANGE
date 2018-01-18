@@ -9,11 +9,11 @@ $disclaimer_mod_params['class'] .= ' ychange-content-language-disclaimer';
 ?>
 
 <div class="ychange-index elgg-main elgg-grid clearfix">
-    <div class="elgg-col">
-        <?php echo elgg_view_module('featured', '', elgg_echo('ychange:index:content_language_disclaimer'), $disclaimer_mod_params); ?>
+    <div class="elgg-col elgg-col-1of1">
+        <div class="elgg-inner pvm">
+            <?php echo elgg_view_module('featured', '', elgg_echo('ychange:index:content_language_disclaimer'), $disclaimer_mod_params); ?>
+        </div>
     </div>
-
-    <div class="clearfloat"></div>
 
     <div class="elgg-col elgg-col-1of3 ychange-index-col1">
         <div class="elgg-inner pvm">
@@ -35,17 +35,19 @@ $disclaimer_mod_params['class'] .= ' ychange-content-language-disclaimer';
 
     <div class="clearfloat"></div>
 
-    <div class="elgg-col elgg-col-1of1 ychange-index-partners">
+    <div class="elgg-col elgg-col-1of2 ychange-index-partners">
         <div class="elgg-inner pvm">
             <?php echo elgg_view_module('featured', elgg_echo('ychange:index:partners'), $vars['partners'], $mod_params); ?>
         </div>
     </div>
 
-    <div class="elgg-col elgg-col-1of1 ychange-index-sponsors">
+    <div class="elgg-col elgg-col-1of2 ychange-index-sponsors">
         <div class="elgg-inner pvm">
             <?php echo elgg_view_module('featured', elgg_echo('ychange:index:sponsors'), $vars['sponsors'], $mod_params); ?>
         </div>
     </div>
+
+    <div class="clearfloat"></div>
 
     <div class="elgg-col elgg-col-1of1 ychange-index-contact">
         <div class="elgg-inner pvm">
