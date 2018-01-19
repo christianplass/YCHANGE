@@ -56,3 +56,22 @@ function ychange_get_class_grade_options($flip = false)
 
     return $flip ? array_flip($options) : $options;
 }
+
+/**
+ * Return language options
+ * @param  boolean $flip Should the keys and values be exchanged
+ * @return array        An array of options
+ */
+function ychange_get_language_options($flip = false)
+{
+    $options = [
+        'en' => 'English',
+        'de' => 'Deutsch',
+        'fr' => 'Français',
+        'it' => 'Italiano',
+        'et' => 'Eesti',
+        'cs' => 'Čeština',
+    ];
+
+    return $flip ? array_flip($options) : $options;
+}

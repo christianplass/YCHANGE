@@ -27,6 +27,14 @@ $fields = [
     ],
     [
         '#type' => 'dropdown',
+        '#label' => elgg_echo('ychange:please_choose_your_language'),
+        'name' => 'language',
+        'options_values' => ychange_get_language_options(),
+        'required' => true,
+        'value' => elgg_extract('language', $vars),
+    ],
+    [
+        '#type' => 'dropdown',
         '#label' => elgg_echo('ychange:class_grade'),
         'name' => 'class_grade',
         'options_values' => ychange_get_class_grade_options(),

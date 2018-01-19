@@ -415,6 +415,8 @@ function ychnage_project_menu_handler($hook, $type, $return, $params)
  */
 function ychange_register_user($hook, $type, $return, $params)
 {
+    elgg_load_library('elgg:ychange:options');
+
     $user = elgg_extract('user', $params);
     $values = elgg_get_sticky_values('register');
 
@@ -425,6 +427,21 @@ function ychange_register_user($hook, $type, $return, $params)
     if ( elgg_extract('request_teacher', $values) === 'yes' )
     {
         $user->request_teacher = 'yes';
+    }
+
+    $language = elgg_extract('language', $values);
+    if ( $language && array_key_exists( $language, ychange_get_language_options() ) )
+    {
+        $user->language = $language;
+        // This seems to be the only way to change the language, writing directly into the database
+        // The normal ways seem to be ignored
+        // Might be related to the fact that entity has just been crated and is overwritten later,
+        // with all the function arguments being passed by value
+        global $CONFIG;
+
+        $sanitizedLanguage = sanitize_string($language);
+        $query = "UPDATE {$CONFIG->dbprefix}users_entity SET language='$sanitizedLanguage' WHERE guid = {$user->guid}";
+        _elgg_services()->db->updateData($query);
     }
 
     $user->save();

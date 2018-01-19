@@ -62,6 +62,7 @@ return [
     'ychange:cookie_consent' => 'This website uses cookies to ensure you get the best possible online experience. By continuing to use our website, you agree to the terms of our <a href="%s">Privacy Policy</a>.',
     'ychnage:cookie_consent:agree' => 'Agree',
     'ychange:index:content_language_disclaimer' => 'This is a multilingual platform, so it includes content in a language other than your own.',
+    'ychange:please_choose_your_language' => 'Please choose your language',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
