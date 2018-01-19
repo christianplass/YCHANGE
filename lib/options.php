@@ -69,8 +69,8 @@ function ychange_get_language_options($flip = false)
         'de' => 'Deutsch',
         'fr' => 'Français',
         'it' => 'Italiano',
-        'et' => 'Eesti',
         'cs' => 'Čeština',
+        'et' => 'Eesti',
     ];
 
     return $flip ? array_flip($options) : $options;
