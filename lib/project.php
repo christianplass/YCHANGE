@@ -22,7 +22,6 @@ function ychange_project_get_page_content_list($container_guid = NULL)
 		'full_view' => false,
 		'no_results' => elgg_echo('ychange:project:none'),
 		'preload_owners' => true,
-		'distinct' => false,
 	];
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -80,6 +79,57 @@ function ychange_project_get_page_content_list($container_guid = NULL)
 }
 
 /**
+* Get explore page contents with list of projects according to criteria.
+*
+* @return array
+*/
+function ychange_project_get_explore_page_content_list()
+{
+	$language = get_input('language');
+	$category = get_input('category');
+
+	$return = array();
+
+	$return['filter_context'] = 'explore';
+	$options = [
+		'type' => 'object',
+		'subtype' => 'project',
+		'full_view' => false,
+		'no_results' => elgg_echo('ychange:project:none'),
+		'preload_owners' => true,
+		'metadata_name_value_pairs' => [
+			[
+				'name' => 'language',
+				'value' => $language,
+			],
+			[
+				'name' => 'category',
+				'value' => $category,
+			],
+		],
+	];
+
+	$options['preload_containers'] = true;
+	$return['title'] = elgg_echo('ychange:title:explore_projects');
+	elgg_pop_breadcrumb();
+	elgg_push_breadcrumb(elgg_echo('ychange:projects'));
+
+	$return['content'] = elgg_view('project/explore', [
+		'languages' => ychange_get_language_options(),
+		'categories' => ychange_project_categories_options(),
+		'language' => $language,
+		'category' => $category,
+	]);
+
+	if ( $language && $category )
+	{
+		$return['content'] .= elgg_list_entities_from_metadata($options);
+	}
+
+	return $return;
+}
+
+/**
 * Get page components to show projects with publish dates between $lower and $upper
 *
 * @param int $owner_guid The GUID of the owner of this page
@@ -120,7 +170,6 @@ function ychange_project_get_page_content_archive($owner_guid, $lower = 0, $uppe
 		'full_view' => false,
 		'no_results' => elgg_echo('ychange:project:none'),
 		'preload_owners' => true,
-		'distinct' => false,
 	];
 
 	if ( $owner instanceof ElggGroup )
@@ -228,6 +277,7 @@ function ychange_project_prepare_form_vars($project = NULL) {
 		'results' => NULL,
 		'sources' => NULL,
 		'location' => NULL,
+		'language' => NULL,
 		'category' => NULL,
 		'container_guid' => NULL,
 		'guid' => NULL,

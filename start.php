@@ -53,11 +53,12 @@ function ychange_tutorials_page_handler($page)
 function ychange_project_page_handler($page)
 {
     elgg_load_library('elgg:ychange:project');
+    elgg_load_library('elgg:ychange:options');
 
     // push all projects breadcrumb
-    elgg_push_breadcrumb(elgg_echo('ychange:projects'), 'projects/all');
+    elgg_push_breadcrumb(elgg_echo('ychange:projects'), 'projects/explore');
 
-    $page_type = elgg_extract(0, $page, 'all');
+    $page_type = elgg_extract(0, $page, 'explore');
     $resource_vars = [
         'page_type' => $page_type,
     ];
@@ -106,6 +107,9 @@ function ychange_project_page_handler($page)
         break;
         case 'all':
         echo elgg_view_resource('project/all', $resource_vars);
+        break;
+        case 'explore':
+        echo elgg_view_resource('project/explore', $resource_vars);
         break;
         default:
         return false;
@@ -557,6 +561,21 @@ function ychange_config_site($hook, $type, $value, $params)
 }
 
 /**
+ * Runs upgrade scripts
+ * @return void
+ */
+function ychange_run_upgrades()
+{
+    $path = __DIR__ . '/upgrades/';
+    $files = elgg_get_upgrade_files($path);
+
+    foreach ( $files as $file )
+    {
+        include $path . $file;
+    }
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -568,6 +587,8 @@ function ychange_init()
 
     elgg_load_library('elgg:ychange:teacher');
 
+    elgg_register_event_handler('upgrade', 'system', 'ychange_run_upgrades');
+
     elgg_extend_view('elgg.css', 'ychange/css');
     elgg_extend_view('elgg.css', 'ychange/front_page/index.css');
 
@@ -578,7 +599,7 @@ function ychange_init()
 
     elgg_register_page_handler('tutorials', 'ychange_tutorials_page_handler');
 
-    $projectItem = new \ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/all');
+    $projectItem = new \ElggMenuItem('projects', elgg_echo('ychange:projects'), 'projects/explore');
     elgg_register_menu_item('site', $projectItem);
 
     $nasaCredits = new \ElggMenuItem('credits', elgg_echo('ychange:nasa:credits'), 'https://earthobservatory.nasa.gov');

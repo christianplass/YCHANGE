@@ -135,6 +135,14 @@ $location_input = elgg_view('input/text', [
 	'class' => 'ychange-geolocation',
 ]);
 
+$language_label = elgg_echo('ychange:project:language');
+$language_input = elgg_view('input/select', [
+	'name' => 'language',
+	'id' => 'project_language',
+	'value' => $vars['language'],
+	'options_values' => ychange_get_language_options(),
+]);
+
 $category_label = elgg_echo('ychange:project:category');
 $category_input = elgg_view('input/select', [
 	'name' => 'category',
@@ -201,6 +209,11 @@ $draft_warning
 <div>
 	<label for="project_location">$location_label</label>
 	$location_input
+</div>
+
+<div>
+    <label for="project_language">$language_label</label>
+	$language_input
 </div>
 
 <div>

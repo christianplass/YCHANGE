@@ -124,6 +124,16 @@ if ( $full )
 
 	}
 
+	$language = '';
+	if ( $project->language )
+	{
+		$language_output = elgg_view('output/text', [
+			'value' => ychage_get_option_value_by_key($project->language, ychange_get_language_options()),
+		]);
+		$language = '<label class="ychnage-project-label">' . elgg_echo('ychange:project:language') . '</label>';
+		$language .= "<div class=\"elgg-output\">$language_output</div>";
+	}
+
 	$category = '';
 	if ( $project->category )
 	{
@@ -134,7 +144,7 @@ if ( $full )
 		$category .= "<div class=\"elgg-output\">$category_output</div>";
 	}
 
-	$body = "$icon $images $topic $interesting $useful $results $sources $location $category";
+	$body = "$icon $images $topic $interesting $useful $results $sources $location $language $category";
 
 	$params = [
 		'entity' => $project,

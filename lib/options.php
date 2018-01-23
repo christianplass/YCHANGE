@@ -6,6 +6,22 @@
  */
 
 /**
+ * Return option value if exists
+ * @param  mixed $key     Key value
+ * @param  array $options An array of key => value options
+ * @return mixed          Value or key if missign from options
+ */
+function ychnage_get_option_value_by_key($key, $options)
+{
+	if ( array_key_exists($key, $options) )
+	{
+		return $options[$key];
+	}
+
+	return $key;
+}
+
+/**
  * Return gender options
  * @param  boolean $flip Should the keys and values be exchanged
  * @return array         An array of options

@@ -63,6 +63,10 @@ return [
     'ychnage:cookie_consent:agree' => 'Agree',
     'ychange:index:content_language_disclaimer' => 'This is a multilingual platform, so it includes content in a language other than your own.',
     'ychange:please_choose_your_language' => 'Please choose your language',
+    'ychange:explore' => 'Explore',
+    'ychange:title:explore_projects' => 'Explore student projects',
+    'ychange:choose:language' => 'Choose language',
+    'ychange:choose:category' => 'Choose category',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
