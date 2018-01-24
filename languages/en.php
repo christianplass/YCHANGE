@@ -67,6 +67,7 @@ return [
     'ychange:title:explore_projects' => 'Explore student projects',
     'ychange:choose:language' => 'Choose language',
     'ychange:choose:category' => 'Choose category',
+    'ychange:project:language' => 'Language',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',

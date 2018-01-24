@@ -128,7 +128,7 @@ if ( $full )
 	if ( $project->language )
 	{
 		$language_output = elgg_view('output/text', [
-			'value' => ychage_get_option_value_by_key($project->language, ychange_get_language_options()),
+			'value' => ychange_get_option_value_by_key($project->language, ychange_get_language_options()),
 		]);
 		$language = '<label class="ychnage-project-label">' . elgg_echo('ychange:project:language') . '</label>';
 		$language .= "<div class=\"elgg-output\">$language_output</div>";

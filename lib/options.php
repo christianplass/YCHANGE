@@ -11,7 +11,7 @@
  * @param  array $options An array of key => value options
  * @return mixed          Value or key if missign from options
  */
-function ychnage_get_option_value_by_key($key, $options)
+function ychange_get_option_value_by_key($key, $options)
 {
 	if ( array_key_exists($key, $options) )
 	{
