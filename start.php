@@ -610,8 +610,10 @@ function ychange_init()
     elgg_register_library('elgg:ychange:project', __DIR__ . '/lib/project.php');
     elgg_register_library('elgg:ychange:teacher', __DIR__ . '/lib/teacher.php');
     elgg_register_library('elgg:ychange:options', __DIR__ . '/lib/options.php');
+    elgg_register_library('elgg:ychange:settings', __DIR__ . '/lib/settings.php');
 
     elgg_load_library('elgg:ychange:teacher');
+    elgg_load_library('elgg:ychange:settings');
 
     elgg_register_event_handler('upgrade', 'system', 'ychange_run_upgrades');
 

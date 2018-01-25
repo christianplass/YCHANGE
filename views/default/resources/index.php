@@ -7,9 +7,9 @@ elgg_push_context('front');
 
 $vars = [
     'pages' => [
-        'about' => elgg_get_plugin_setting('about', 'ychange'),
-        'goal' => elgg_get_plugin_setting('goal', 'ychange'),
-        'participate' => elgg_get_plugin_setting('participate', 'ychange'),
+        'about' => ychange_get_translated_plugin_setting('about'),
+        'goal' => ychange_get_translated_plugin_setting('goal'),
+        'participate' => ychange_get_translated_plugin_setting('participate'),
     ],
     'partners' => elgg_view('ychange/front_page/partners'),
     'sponsors' => elgg_view('ychange/front_page/sponsors'),
