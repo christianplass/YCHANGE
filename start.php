@@ -34,7 +34,7 @@ function ychange_tutorials_page_handler($page)
         elgg_register_menu_item('title', array(
             'name' => 'edit',
             'text' => elgg_echo('edit'),
-            'href' => "admin/plugin_settings/ychange",
+            'href' => "admin/appearance/ychange_settings?type=tutorials",
             'link_class' => 'elgg-button elgg-button-action',
         ));
     }
@@ -589,7 +589,7 @@ function ychange_settings_menu_register_hook($hook, $type, $return, $params)
 {
         $type = elgg_extract('type', $params);
 
-        $settings = ['about', 'goal', 'participate', 'tutorials'];
+        $settings = ['about', 'goal', 'participate', 'tutorials', 'blif'];
         foreach ( $settings as $setting ) {
                 $return[] = ElggMenuItem::factory(array(
                         'name' => $setting,
@@ -599,6 +599,27 @@ function ychange_settings_menu_register_hook($hook, $type, $return, $params)
                 ));
         }
         return $return;
+}
+
+/**
+ *  BLIF page handler
+ * @param  array $page Page path parts
+ * @return bool
+ */
+function ychange_blif_page_handler($page)
+{
+    if ( elgg_is_admin_logged_in() ) {
+        elgg_register_menu_item('title', array(
+            'name' => 'edit',
+            'text' => elgg_echo('edit'),
+            'href' => "admin/appearance/ychange_settings?type=blif",
+            'link_class' => 'elgg-button elgg-button-action',
+        ));
+    }
+
+    echo elgg_view_resource('ychange/blif');
+
+    return true;
 }
 
 /**
@@ -745,4 +766,9 @@ function ychange_init()
     // register action
     $actions_base = __DIR__ . '/actions';
     elgg_register_action("ychange/settings/edit", __DIR__ . "/actions/admin/setting/edit.php", 'admin');
+
+    $blifItem = new \ElggMenuItem('blif', elgg_echo('ychange:site:menu:blif'), 'blif');
+    elgg_register_menu_item('site', $blifItem);
+
+    elgg_register_page_handler('blif', 'ychange_blif_page_handler');
 }

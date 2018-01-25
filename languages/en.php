@@ -68,6 +68,7 @@ return [
     'ychange:choose:language' => 'Choose language',
     'ychange:choose:category' => 'Choose category',
     'ychange:project:language' => 'Language',
+    'ychange:site:menu:blif' => 'BLIF',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
@@ -106,6 +107,7 @@ return [
     'ychange:settings:goal' => 'Goal',
     'ychange:settings:participate' => 'Participate',
     'ychange:settings:tutorials' => 'Tutorials',
+    'ychange:settings:blif' => 'BLIF',
 
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
