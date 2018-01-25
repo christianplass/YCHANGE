@@ -69,6 +69,8 @@ return [
     'ychange:choose:category' => 'Choose category',
     'ychange:project:language' => 'Language',
     'ychange:site:menu:blif' => 'BLIF',
+    'ychange:contact:general' => 'General contact',
+    'ychange:contact:technical' => 'Technical issues',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
