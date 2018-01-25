@@ -102,6 +102,11 @@ return [
     'ychange:admin:user:rejectteacher:yes' => 'Teacher request rejected.',
     'ychange:admin:user:rejectteacher:no' => 'We could not remove teacher request for this user.',
 
+    'ychange:settings:about' => 'About',
+    'ychange:settings:goal' => 'Goal',
+    'ychange:settings:participate' => 'Participate',
+    'ychange:settings:tutorials' => 'Tutorials',
+
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',
     'item:object:satellite_image' => 'Satellite images',
@@ -110,4 +115,5 @@ return [
     'admin:users:teacher_requests' => 'Teacher requests',
     'profile:gender' => 'Gender',
     'profile:class_grade' => 'Class grade',
+    'admin:appearance:ychange_settings' => 'Ychange Settings',
 ];

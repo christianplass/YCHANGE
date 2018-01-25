@@ -576,6 +576,32 @@ function ychange_run_upgrades()
 }
 
 /**
+ * Adds menu items to the settings edit form
+ *
+ * @param string $hook   'register'
+ * @param string $type   'menu:ychange_settings'
+ * @param array  $return current menu items
+ * @param array  $params parameters
+ *
+ * @return array
+ */
+function ychange_settings_menu_register_hook($hook, $type, $return, $params)
+{
+        $type = elgg_extract('type', $params);
+
+        $settings = ['about', 'goal', 'participate', 'tutorials'];
+        foreach ( $settings as $setting ) {
+                $return[] = ElggMenuItem::factory(array(
+                        'name' => $setting,
+                        'text' => elgg_echo("ychange:settings:$setting"),
+                        'href' => "admin/appearance/ychange_settings?type=$setting",
+                        'selected' => $setting === $type,
+                ));
+        }
+        return $return;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -710,4 +736,11 @@ function ychange_init()
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'ychange_user_entity_menu_handler', 1000);
 
     elgg_extend_view('page/elements/footer', 'ychange/cookie_consent');
+
+    elgg_register_plugin_hook_handler('register', 'menu:ychange_settings', 'ychange_settings_menu_register_hook');
+    elgg_register_admin_menu_item('configure', 'ychange_settings', 'appearance');
+
+    // register action
+    $actions_base = __DIR__ . '/actions';
+    elgg_register_action("ychange/settings/edit", __DIR__ . "/actions/admin/setting/edit.php", 'admin');
 }
