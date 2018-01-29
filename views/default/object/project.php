@@ -155,6 +155,18 @@ if ( $full )
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
 
+	echo elgg_view('output/longtext', [
+		'value' => elgg_echo('ychange:project:questionnaire:text', [
+			ychange_project_get_techer_questionnaire_url(),
+			ychange_project_get_student_questionnaire_url(),
+		]),
+		'class' => 'ychange-questionnaire-info-box',
+		'parse_urls' => false,
+		'parse_emails' => false,
+		'sanitize' => false,
+		'autop' => false,
+
+	]);
 	echo elgg_view('object/elements/full', [
 		'entity' => $project,
 		'summary' => $summary,

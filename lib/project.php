@@ -348,3 +348,15 @@ function ychange_project_category_by_key(string $key)
 
 	return $key;
 }
+
+// TODO Add docstring and make sure setting exists
+function ychange_project_get_techer_questionnaire_url()
+{
+	return elgg_get_plugin_setting('teacher_questionnair_url', 'ychange');
+}
+
+// TODO Add docstring and make sure setting exists
+function ychange_project_get_student_questionnaire_url()
+{
+	return elgg_get_plugin_setting('student_questionnaire_url', 'ychange');
+}

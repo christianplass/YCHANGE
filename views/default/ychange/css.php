@@ -159,3 +159,11 @@ a {
 .ychange-tutorials a i.fa-youtube:before {
     color: #FF0000;
 }
+
+.ychange-questionnaire-info-box {
+    font-weight: bold;
+}
+
+.ychange-questionnaire-info-box a {
+    color: #5097CF;
+}

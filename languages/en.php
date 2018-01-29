@@ -73,6 +73,7 @@ return [
     'ychange:contact:technical' => 'Technical issues',
     'ychange:setting:not:saved' => 'Setting could not be saved.',
     'ychange:setting:saved' => 'Setting and translations successfully saved.',
+    'ychange:project:questionnaire:text' => 'If you have completed your project(s), please remember to fill out the evaluation questionnaire. <a href="%s">Teacher questionnaire</a> – <a href="%s">Student questionnaire</a>',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
