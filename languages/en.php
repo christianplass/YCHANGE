@@ -71,6 +71,8 @@ return [
     'ychange:site:menu:blif' => 'BLIF',
     'ychange:contact:general' => 'General contact',
     'ychange:contact:technical' => 'Technical issues',
+    'ychange:setting:not:saved' => 'Setting could not be saved.',
+    'ychange:setting:saved' => 'Setting and translations successfully saved.',
 
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',

@@ -14,13 +14,10 @@ $content = get_input('content', '', false);
 
 if ( $type )
 {
-    if ( elgg_set_plugin_setting($type, $content, 'ychange') )
+    if ( !elgg_set_plugin_setting($type, $content, 'ychange') )
     {
-        // TODO Show some meaningful message
-    }
-    else
-    {
-        // TODO Show some meaningful message
+        register_error(elgg_echo('ychange:setting:not:saved'));
+        forward(REFERER);
     }
 
     foreach ( array_keys($languages) as $language )
@@ -35,7 +32,10 @@ if ( $type )
 }
 else
 {
-    // TODO Show some meaningful message
+    register_error(elgg_echo('ychange:setting:not:saved'));
+    forward(REFERER);
 }
+
+system_message(elgg_echo('ychange:setting:saved'));
 
 forward(REFERER);
