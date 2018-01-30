@@ -126,6 +126,7 @@ All students participating and having parental consent should fill out one quest
     'ychange:settings:participate' => 'Participate',
     'ychange:settings:tutorials' => 'Tutorials',
     'ychange:settings:blif' => 'BLIF',
+    'ychange:settings:curriculum' => 'Curriculum',
 
     'river:create:object:project' => '%s created a student project %s',
     'item:object:project' => 'Student projects',

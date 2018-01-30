@@ -589,7 +589,7 @@ function ychange_settings_menu_register_hook($hook, $type, $return, $params)
 {
         $type = elgg_extract('type', $params);
 
-        $settings = ['about', 'goal', 'participate', 'tutorials', 'blif'];
+        $settings = ['about', 'goal', 'participate', 'tutorials', 'blif', 'curriculum',];
         foreach ( $settings as $setting ) {
                 $return[] = ElggMenuItem::factory(array(
                         'name' => $setting,
@@ -618,6 +618,27 @@ function ychange_blif_page_handler($page)
     }
 
     echo elgg_view_resource('ychange/blif');
+
+    return true;
+}
+
+/**
+ *  Curriculum page handler
+ * @param  array $page Page path parts
+ * @return bool
+ */
+function ychange_curriculum_page_handler($page)
+{
+    if ( elgg_is_admin_logged_in() ) {
+        elgg_register_menu_item('title', array(
+            'name' => 'edit',
+            'text' => elgg_echo('edit'),
+            'href' => "admin/appearance/ychange_settings?type=curriculum",
+            'link_class' => 'elgg-button elgg-button-action',
+        ));
+    }
+
+    echo elgg_view_resource('ychange/curriculum');
 
     return true;
 }
@@ -771,4 +792,9 @@ function ychange_init()
     elgg_register_menu_item('site', $blifItem);
 
     elgg_register_page_handler('blif', 'ychange_blif_page_handler');
+
+    $curriculumItem = new \ElggMenuItem('curriculum', elgg_echo('ychange:settings:curriculum'), 'curriculum');
+    elgg_register_menu_item('site', $curriculumItem);
+
+    elgg_register_page_handler('curriculum', 'ychange_curriculum_page_handler');
 }
