@@ -30,3 +30,17 @@
     </label>
     <?php echo elgg_view('input/text', ['name' => 'params[google_maps_key]', 'value' => $vars['entity']->google_maps_key]); ?>
 </div>
+
+<div class="mtm">
+    <label>
+        <?php echo elgg_echo('ychange:setting:teacher:questionnaire:url'); ?>
+    </label>
+    <?php echo elgg_view('input/url', ['name' => 'params[teacher_questionnaire_url]', 'value' => $vars['entity']->teacher_questionnaire_url]); ?>
+</div>
+
+<div class="mtm">
+    <label>
+        <?php echo elgg_echo('ychange:setting:student:questionnaire:url'); ?>
+    </label>
+    <?php echo elgg_view('input/url', ['name' => 'params[student_questionnaire_url]', 'value' => $vars['entity']->student_questionnaire_url]); ?>
+</div>

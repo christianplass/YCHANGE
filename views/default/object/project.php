@@ -157,7 +157,7 @@ if ( $full )
 
 	echo elgg_view('output/longtext', [
 		'value' => elgg_echo('ychange:project:questionnaire:text', [
-			ychange_project_get_techer_questionnaire_url(),
+			ychange_project_get_teacher_questionnaire_url(),
 			ychange_project_get_student_questionnaire_url(),
 		]),
 		'class' => 'ychange-questionnaire-info-box',
