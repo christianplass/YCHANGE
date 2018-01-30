@@ -86,6 +86,45 @@ class ElggYchangeProject extends ElggObject
     }
 
     /**
+     * Notify group owner about project being published (by email),
+     * the system does not track if it is the initial publishing or the project
+     * got unpublished at some point in time
+     * @return void
+     */
+    private function notifyGroupOwner()
+    {
+        elgg_load_library('elgg:ychange:project');
+
+        $container = $this->getContainerEntity();
+        if ( $container && elgg_instanceof($container, 'group', null, ElggGroup) )
+        {
+            $owner = $container->getOwnerEntity();
+            if ( $owner && elgg_instanceof($owner, 'user', null, ElggUser) )
+            {
+                $site = elgg_get_site_entity();
+                $loggedIn = elgg_get_logged_in_user_entity();
+                $subject = elgg_echo('ychange:email:project:published:subject', [
+                    $site->name,
+                ], $owner->language);
+                $body = elgg_echo('ychange:emailproject:published:body', [
+                    $owner->name,
+                    $this->title,
+                    $this->getURL(),
+                    $loggedIn->name,
+                    ychange_project_get_student_questionnaire_url(),
+                    $site->name,
+                    $site->url,
+                ], $owner->language);
+                $params = [
+                    'object' => $this,
+                    'action' => 'publish',
+                ];
+                notify_user($owner->getGUID(), $site->getGUID(), $subject, $body, $params, 'email');
+            }
+        }
+    }
+
+    /**
      * Make project and attached images public
      * @return boolean
      */
@@ -107,6 +146,7 @@ class ElggYchangeProject extends ElggObject
         {
             elgg_trigger_event('publish', 'project', $this);
             $this->changeAccessIdForSatelliteImages();
+            $this->notifyGroupOwner();
 
             return true;
         }

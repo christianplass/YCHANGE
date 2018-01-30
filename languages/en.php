@@ -77,7 +77,17 @@ return [
     'ychange:project:list:questionnaire:text' => 'Please remember have your project marked as “public” (icon %s). When the project is completed, please provide us with feedback using the <a href="%s">teacher</a> or <a href="%s">student</a> questionnaire (depending on your role).',
     'ychange:setting:teacher:questionnaire:url' => 'Teacher questionnaire URL',
     'ychange:setting:student:questionnaire:url' => 'Student questionnaire URL',
+    'ychange:email:project:published:subject' => 'Student project published at %s',
+    'ychange:emailproject:published:body' => '%s,
 
+A project %s located at %s was published by %s.
+
+All students participating and having parental consent should fill out one questionnaire.
+%s
+
+%s
+%s
+',
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',
     'ychange:gender:other' => 'Other',
