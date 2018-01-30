@@ -74,6 +74,7 @@ return [
     'ychange:setting:not:saved' => 'Setting could not be saved.',
     'ychange:setting:saved' => 'Setting and translations successfully saved.',
     'ychange:project:questionnaire:text' => 'If you have completed your project(s), please remember to fill out the evaluation questionnaire. <a href="%s">Teacher questionnaire</a> – <a href="%s">Student questionnaire</a>',
+    'ychange:project:list:questionnaire:text' => 'Please remember have your project marked as “public” (icon %s). When the project is completed, please provide us with feedback using the <a href="%s">teacher</a> or <a href="%s">student</a> questionnaire (depending on your role).',
     'ychange:setting:teacher:questionnaire:url' => 'Teacher questionnaire URL',
     'ychange:setting:student:questionnaire:url' => 'Student questionnaire URL',
 

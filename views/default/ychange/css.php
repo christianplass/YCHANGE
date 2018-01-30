@@ -167,3 +167,7 @@ a {
 .ychange-questionnaire-info-box a {
     color: #5097CF;
 }
+
+.ychange-questionnaire-info-box .elgg-icon {
+    color: #0F1F52;
+}

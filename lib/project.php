@@ -73,7 +73,8 @@ function ychange_project_get_page_content_list($container_guid = NULL)
 		elgg_register_title_button('projects', 'add', 'object', 'project');
 	}
 
-	$return['content'] = elgg_list_entities($options);
+	$return['content'] = elgg_view('project/listing_questionnaire_info_box');
+	$return['content'] .= elgg_list_entities($options);
 
 	return $return;
 }
@@ -114,7 +115,8 @@ function ychange_project_get_explore_page_content_list()
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('ychange:projects'));
 
-	$return['content'] = elgg_view('project/explore', [
+	$return['content'] = elgg_view('project/listing_questionnaire_info_box');
+	$return['content'] .= elgg_view('project/explore', [
 		'languages' => ychange_get_language_options(),
 		'categories' => ychange_project_categories_options(),
 		'language' => $language,
