@@ -69,6 +69,7 @@ return [
     'ychange:choose:category' => 'Choose category',
     'ychange:project:language' => 'Language',
     'ychange:site:menu:blif' => 'BLIF',
+    'ychange:site:menu:webmap' => 'Webmap',
     'ychange:contact:general' => 'General contact',
     'ychange:contact:technical' => 'Technical issues',
     'ychange:setting:not:saved' => 'Setting could not be saved.',

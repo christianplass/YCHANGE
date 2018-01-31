@@ -644,6 +644,23 @@ function ychange_curriculum_page_handler($page)
 }
 
 /**
+ *  WEB MAP page handler
+ * @param  array $page Page path parts
+ * @return bool
+ */
+function ychange_webmap_page_handler($page)
+{
+    if ( elgg_is_logged_in() )
+    {
+        echo elgg_view_resource('ychange/webmap');
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
  * Initializes plugin, registering any logics or overrides needed
  * @return void
  */
@@ -797,4 +814,12 @@ function ychange_init()
     elgg_register_menu_item('site', $curriculumItem);
 
     elgg_register_page_handler('curriculum', 'ychange_curriculum_page_handler');
+
+    if ( elgg_is_logged_in() )
+    {
+        $webMapItem = new \ElggMenuItem('webmap', elgg_echo('ychange:site:menu:webmap'), 'webmap');
+        elgg_register_menu_item('site', $webMapItem);
+
+        elgg_register_page_handler('webmap', 'ychange_webmap_page_handler');
+    }
 }
