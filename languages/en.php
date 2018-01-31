@@ -77,16 +77,15 @@ return [
     'ychange:project:list:questionnaire:text' => 'Please remember have your project marked as “public” (icon %s). When the project is completed, please provide us with feedback using the <a href="%s">teacher</a> or <a href="%s">student</a> questionnaire (depending on your role).',
     'ychange:setting:teacher:questionnaire:url' => 'Teacher questionnaire URL',
     'ychange:setting:student:questionnaire:url' => 'Student questionnaire URL',
-    'ychange:email:project:published:subject' => 'Student project published at %s',
-    'ychange:emailproject:published:body' => '%s,
+    'ychange:email:project:published:subject' => 'Remote sensing project published',
+    'ychange:email:project:published:body' => 'Dear project group leader,
 
-A project %s located at %s was published by %s.
+Thank you for publishing your remote sensing project on the YCHANGE platform!
+We would greatly appreciate the feedback from all of your group members regarding the YCHANGE platform and the remote sensing tools and information provided.
+If you are a teacher please provide your feedback here: %s.
+If you are a student please provide your feedback here: %s.
 
-All students participating and having parental consent should fill out one questionnaire.
-%s
-
-%s
-%s
+Please provide the above link to all students participating with parental consent and ask them to fill out one questionnaire per person!
 ',
     'ychange:gender:male' => 'Male',
     'ychange:gender:female' => 'Female',

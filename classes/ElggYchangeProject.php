@@ -102,18 +102,10 @@ class ElggYchangeProject extends ElggObject
             if ( $owner && elgg_instanceof($owner, 'user', null, ElggUser) )
             {
                 $site = elgg_get_site_entity();
-                $loggedIn = elgg_get_logged_in_user_entity();
-                $subject = elgg_echo('ychange:email:project:published:subject', [
-                    $site->name,
-                ], $owner->language);
-                $body = elgg_echo('ychange:emailproject:published:body', [
-                    $owner->name,
-                    $this->title,
-                    $this->getURL(),
-                    $loggedIn->name,
+                $subject = elgg_echo('ychange:email:project:published:subject', [], $owner->language);
+                $body = elgg_echo('ychange:email:project:published:body', [
+                    ychange_project_get_teacher_questionnaire_url(),
                     ychange_project_get_student_questionnaire_url(),
-                    $site->name,
-                    $site->url,
                 ], $owner->language);
                 $params = [
                     'object' => $this,
