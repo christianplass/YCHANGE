@@ -104,6 +104,7 @@ class ElggYchangeProject extends ElggObject
                 $site = elgg_get_site_entity();
                 $subject = elgg_echo('ychange:email:project:published:subject', [], $owner->language);
                 $body = elgg_echo('ychange:email:project:published:body', [
+                    $this->getURL(),
                     ychange_project_get_teacher_questionnaire_url(),
                     ychange_project_get_student_questionnaire_url(),
                 ], $owner->language);

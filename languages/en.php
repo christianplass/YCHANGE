@@ -82,6 +82,7 @@ return [
     'ychange:email:project:published:body' => 'Dear project group leader,
 
 Thank you for publishing your remote sensing project on the YCHANGE platform!
+The project details can be accessed via the following link: %s
 We would greatly appreciate the feedback from all of your group members regarding the YCHANGE platform and the remote sensing tools and information provided.
 If you are a teacher please provide your feedback here: %s.
 If you are a student please provide your feedback here: %s.
