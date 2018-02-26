@@ -5,7 +5,7 @@
 
 $title = elgg_echo('ychange:site:menu:webmap');
 
-$content = '<iframe width="100%" height="600px" src="https://www.arcgis.com/apps/MapTour/index.html?appid=e84dd45b8b2c44609e8f74117add8388"></iframe>';
+$content = '<iframe width="100%" height="600px" src="https://cuni.maps.arcgis.com/apps/MapTour/index.html?appid=56279b2055a048b9808b2ece27907a63"></iframe>';
 
 $body = elgg_view_layout('one_column', array(
         'content' => $content,
