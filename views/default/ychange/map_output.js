@@ -25,7 +25,7 @@ define(function(require) {
                 .attr('class', 'ychange-map-output');
             _this.append(mapElement);
 
-            map = L.map(mapElement.attr('id')).setView(location, 8);
+            map = L.map(mapElement.attr('id')).setView(location, 4);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
                 maxZoom: 18,

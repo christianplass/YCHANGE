@@ -3,19 +3,48 @@ define(function(require) {
     var L = require("leafletjs");
     var mapInputs = $('.ychange-geolocation');
 
+    function parseLocation(string) {
+        var split = string.split(',');
+
+        if ( split.length === 2 ) {
+            var lat = parseFloat(split[0]);
+            var lng = parseFloat(split[1]);
+
+            if ( !( isNaN(lat) && isNaN(lng) ) ) {
+                return [lat, lng];
+            }
+        }
+
+        return null;
+    }
+
     function setGeolocationValue(input, latLng) {
         input.val(latLng.lat + ',' + latLng.lng);
     }
 
+    function initMarker(input, map, latLng) {
+        var marker = L.marker(latLng, {
+            draggable: true
+        }).addTo(map);
+
+        marker.on('dragend', function(e) {
+            setGeolocationValue(input, marker.getLatLng());
+        });
+
+        return marker;
+    }
+
     if ( mapInputs.length > 0 ) {
         mapInputs.each(function() {
-            // TODO Read value from input and initialize marker
-            // Listen to changes within the input field and update the map accordingly
+            // TODO Listen to changes within the input field and update the map accordingly
             var _this = $(this),
                 mapElement = $('<div></div>'),
                 map = null,
                 marker = null,
-                timeout = null;
+                timeout = null,
+                location = null;
+
+            location = parseLocation(_this.val());
 
             mapElement
                 .attr('id', _this.attr('id') + '_map')
@@ -28,6 +57,10 @@ define(function(require) {
                 maxZoom: 18,
             }).addTo(map);
 
+            if ( location ) {
+                marker = initMarker(_this, map, location);
+            }
+
             map.on('click', function(e) {
                 if ( timeout ) {
                     clearTimeout(timeout);
@@ -36,13 +69,7 @@ define(function(require) {
 
                 timeout = setTimeout(function() {
                     if ( !marker ) {
-                        marker = L.marker(e.latlng, {
-                            draggable: true
-                        }).addTo(map);
-
-                        marker.on('dragend', function(e) {
-                            setGeolocationValue(_this, marker.getLatLng());
-                        });
+                        marker = initMarker(_this, map, e.latlng);
                     } else {
                         marker.setLatLng(e.latlng);
                     }
