@@ -109,19 +109,15 @@ if ( $full )
 	$location = '';
 	if ( $project->location )
 	{
-		$key = elgg_get_plugin_setting('google_maps_key', 'ychange');
 		$location_output = elgg_view('output/text', [
 			'value' => $project->location,
 		]);
 		$location = '<label class="ychnage-project-label">' . elgg_echo('ychange:project:location') . '</label>';
-		$location .= "<div class=\"elgg-output\">$location_output</div>";
 		if ( $project->hasCorrectGeolocation() )
 		{
-			$locationBaseUrl = GOOGLE_MAPS_STATIC_URL;
-			$location .= "<img src=\"{$locationBaseUrl}{$project->location}&amp;zoom=10&amp;size=320x240&amp;maptype=hybrid&amp;markers=color:red%7C{$project->location}&amp;key={$key}\" alt=\"map\">";
-
+			$location .= "<div id=\"project-location\" class=\"ychange-geolocation\" data-location=\"{$project->location}\"></div>";
 		}
-
+		$location .= "<div class=\"elgg-output\">$location_output</div>";
 	}
 
 	$language = '';

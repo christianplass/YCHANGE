@@ -109,7 +109,7 @@ a {
     display: block;
 }
 
-.ychange-map-input {
+.ychange-map-input, .ychange-map-output {
     width: 100%;
     height: 320px;
 }

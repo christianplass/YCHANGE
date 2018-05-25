@@ -2,9 +2,9 @@
 
 define('RECAPTCHA_JS_URL', 'https://www.google.com/recaptcha/api.js');
 define('RECAPTCHA_VERIFY_URL', 'https://www.google.com/recaptcha/api/siteverify');
-define('GOOGLE_MAPS_JS_URL', 'https://maps.googleapis.com/maps/api/js?key=');
-define('GOOGLE_MAPS_STATIC_URL', 'https://maps.googleapis.com/maps/api/staticmap?center=');
 define('GOOGLE_ANALYTICS_JS_URL', 'https://www.googletagmanager.com/gtag/js?id=');
+define('LEAFLET_CSS_URL', 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css');
+define('LEAFLET_JS_URL', 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js');
 
 // Register plugin initialization hook
 elgg_register_event_handler('init', 'system', 'ychange_init');
@@ -78,20 +78,22 @@ function ychange_project_page_handler($page)
         echo elgg_view_resource('project/archive', $resource_vars);
         break;
         case 'view':
+        elgg_load_css('leafletjs');
+        elgg_require_js("ychange/map_output");
         $resource_vars['guid'] = elgg_extract(1, $page);
 
         echo elgg_view_resource('project/view', $resource_vars);
         break;
         case 'add':
-        elgg_load_js('googleMaps');
-        elgg_require_js("ychange/google_maps");
+        elgg_load_css('leafletjs');
+        elgg_require_js("ychange/map_input");
         $resource_vars['guid'] = elgg_extract(1, $page);
 
         echo elgg_view_resource('project/add', $resource_vars);
         break;
         case 'edit':
-        elgg_load_js('googleMaps');
-        elgg_require_js("ychange/google_maps");
+        elgg_load_css('leafletjs');
+        elgg_require_js("ychange/map_input");
         $resource_vars['guid'] = elgg_extract(1, $page);
         $resource_vars['revision'] = elgg_extract(2, $page);
 
@@ -721,7 +723,6 @@ function ychange_init()
 
     $recaptchaKey = elgg_get_plugin_setting('recaptcha_key', 'ychange');
     $recaptchaSecret = elgg_get_plugin_setting('recaptcha_secret', 'ychange');
-    $googleMapsKey = elgg_get_plugin_setting('google_maps_key', 'ychange');
     if ( elgg_is_admin_logged_in() && elgg_get_context() === 'admin' ) {
         // Manage admin message if required configurations are missing
         if ( empty($recaptchaKey) || empty($recaptchaSecret) )
@@ -733,18 +734,6 @@ function ychange_init()
             if ( elgg_admin_notice_exists('recaptcha_settings_missing') )
             {
                 elgg_delete_admin_notice('recaptcha_settings_missing');
-            }
-        }
-
-        if ( empty($googleMapsKey) )
-        {
-            elgg_add_admin_notice('google_maps_settings_missing', elgg_echo('ychange:google:maps:settings:missing'));
-        }
-        else
-        {
-            if ( elgg_admin_notice_exists('google_maps_settings_missing') )
-            {
-                elgg_delete_admin_notice('google_maps_settings_missing');
             }
         }
 
@@ -760,7 +749,11 @@ function ychange_init()
             }
         }
     }
-    elgg_register_js('googleMaps', GOOGLE_MAPS_JS_URL . $googleMapsKey, 'head');
+    elgg_register_css('leafletjs', LEAFLET_CSS_URL, 'head');
+    elgg_define_js('leafletjs', [
+        'src' => LEAFLET_JS_URL,
+        'exports' => 'leafletjs',
+    ]);
 
     $googleAnalyticsKey = elgg_get_plugin_setting('google_analytics_key', 'ychange');
     if ( $googleAnalyticsKey )

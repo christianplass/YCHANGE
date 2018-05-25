@@ -1,9 +1,10 @@
 define(function(require) {
     var $ = require("jquery");
+    var L = require("leafletjs");
     var mapInputs = $('.ychange-geolocation');
 
     function setGeolocationValue(input, latLng) {
-        input.val(latLng.lat() + ',' + latLng.lng());
+        input.val(latLng.lat + ',' + latLng.lng);
     }
 
     if ( mapInputs.length > 0 ) {
@@ -21,11 +22,13 @@ define(function(require) {
                 .attr('class', 'ychange-map-input');
             _this.before(mapElement);
 
-            map = new google.maps.Map(document.getElementById(mapElement.attr('id')), {
-                center: { lat: 48.6908333333, lng: 9.14055555556 },
-                zoom: 4
-            });
-            map.addListener('click', function(event) {
+            map = L.map(mapElement.attr('id')).setView([48.6908333333, 9.14055555556], 4);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                maxZoom: 18,
+            }).addTo(map);
+
+            map.on('click', function(e) {
                 if ( timeout ) {
                     clearTimeout(timeout);
                     timeout = null;
@@ -33,24 +36,22 @@ define(function(require) {
 
                 timeout = setTimeout(function() {
                     if ( !marker ) {
-                        marker = new google.maps.Marker({
-                            position: event.latLng,
-                            map: map,
+                        marker = L.marker(e.latlng, {
                             draggable: true
-                        });
+                        }).addTo(map);
 
-                        marker.addListener('dragend', function() {
-                            setGeolocationValue(_this, marker.getPosition());
+                        marker.on('dragend', function(e) {
+                            setGeolocationValue(_this, marker.getLatLng());
                         });
                     } else {
-                        marker.setPosition(event.latLng);
+                        marker.setLatLng(e.latlng);
                     }
 
-                    setGeolocationValue(_this, event.latLng);
+                    setGeolocationValue(_this, e.latlng);
                 }, 250);
             });
 
-            map.addListener('dblclick', function() {
+            map.on('dblclick', function(e) {
                 if ( timeout ) {
                     clearTimeout(timeout);
                     timeout = null;
