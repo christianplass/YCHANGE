@@ -171,3 +171,7 @@ a {
 .ychange-questionnaire-info-box .elgg-icon {
     color: #0F1F52;
 }
+
+.ychange-webmap .elgg-page-body > .elgg-inner {
+    max-width: 100%;
+}
