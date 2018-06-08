@@ -815,4 +815,11 @@ function ychange_init()
 
         elgg_register_page_handler('webmap', 'ychange_webmap_page_handler');
     }
+
+    $projectSamplesUrl = elgg_get_plugin_setting('project_samples_url', 'ychange');
+    if ( $projectSamplesUrl )
+    {
+        $projectSamplesItem = new \ElggMenuItem('project:samples', elgg_echo('ychange:site:menu:project:samples'), $projectSamplesUrl);
+        elgg_register_menu_item('site', $projectSamplesItem);
+    }
 }

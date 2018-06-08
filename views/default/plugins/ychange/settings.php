@@ -26,6 +26,13 @@
 
 <div class="mtm">
     <label>
+        <?php echo elgg_echo('ychange:setting:project:samples:url'); ?>
+    </label>
+    <?php echo elgg_view('input/url', ['name' => 'params[project_samples_url]', 'value' => $vars['entity']->project_samples_url]); ?>
+</div>
+
+<div class="mtm">
+    <label>
         <?php echo elgg_echo('ychange:setting:teacher:questionnaire:url'); ?>
     </label>
     <?php echo elgg_view('input/url', ['name' => 'params[teacher_questionnaire_url]', 'value' => $vars['entity']->teacher_questionnaire_url]); ?>
