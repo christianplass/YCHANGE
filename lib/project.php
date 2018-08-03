@@ -74,6 +74,7 @@ function ychange_project_get_page_content_list($container_guid = NULL)
 	}
 
 	$return['content'] = elgg_view('project/listing_questionnaire_info_box');
+	$return['content'] .= elgg_view('project/login_for_webmap');
 	$return['content'] .= elgg_list_entities($options);
 
 	return $return;
@@ -116,6 +117,7 @@ function ychange_project_get_explore_page_content_list()
 	elgg_push_breadcrumb(elgg_echo('ychange:projects'));
 
 	$return['content'] = elgg_view('project/listing_questionnaire_info_box');
+	$return['content'] .= elgg_view('project/login_for_webmap');
 	$return['content'] .= elgg_view('project/explore', [
 		'languages' => ychange_get_language_options(),
 		'categories' => ychange_project_categories_options(),

@@ -160,7 +160,7 @@ a {
     color: #FF0000;
 }
 
-.ychange-questionnaire-info-box {
+.ychange-questionnaire-info-box, .ychange-login-for-webmap {
     font-weight: bold;
 }
 
@@ -168,7 +168,7 @@ a {
     color: #5097CF;
 }
 
-.ychange-questionnaire-info-box .elgg-icon {
+.ychange-questionnaire-info-box .elgg-icon, .ychange-login-for-webmap .elgg-icon {
     color: #0F1F52;
 }
 
