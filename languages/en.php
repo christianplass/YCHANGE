@@ -68,6 +68,7 @@ return [
     'ychange:project:language' => 'Language',
     'ychange:site:menu:blif' => 'BLIF',
     'ychange:site:menu:webmap' => 'Webmap',
+    'ychange:webmap:open:in:new:tab' => 'Please click here to see the map enlarged in an own tab.',
     'ychange:site:menu:project:samples' => 'Project samples',
     'ychange:setting:project:samples:url' => 'Project samples URL',
     'ychange:contact:general' => 'General contact',

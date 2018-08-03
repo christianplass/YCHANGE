@@ -175,3 +175,13 @@ a {
 .ychange-webmap .elgg-page-body > .elgg-inner {
     max-width: 100%;
 }
+
+.ychange-webmap .ychange-open-map-in-new-tab {
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.ychange-webmap .ychange-open-map-in-new-tab .elgg-icon {
+  color: #0F1F52;
+}
