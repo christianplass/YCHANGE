@@ -44,3 +44,10 @@
     </label>
     <?php echo elgg_view('input/url', ['name' => 'params[student_questionnaire_url]', 'value' => $vars['entity']->student_questionnaire_url]); ?>
 </div>
+
+<div class="mtm">
+    <label>
+        <?php echo elgg_echo('ychange:setting:webmap:url'); ?>
+    </label>
+    <?php echo elgg_view('input/url', ['name' => 'params[webmap_url]', 'value' => $vars['entity']->webmap_url]); ?>
+</div>

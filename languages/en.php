@@ -80,6 +80,7 @@ return [
     'ychange:project:list:webmap:text' => 'Log in with your account to see a web map with the locations of already available project samples and student projects.',
     'ychange:setting:teacher:questionnaire:url' => 'Teacher questionnaire URL',
     'ychange:setting:student:questionnaire:url' => 'Student questionnaire URL',
+    'ychange:setting:webmap:url' => 'Webmap IFRAME URL',
     'ychange:email:project:published:subject' => 'Remote sensing project published',
     'ychange:email:project:published:body' => 'Dear project group leader,
 
