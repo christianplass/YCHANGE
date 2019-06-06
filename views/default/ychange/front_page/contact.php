@@ -7,11 +7,11 @@ $generalContact = elgg_echo('ychange:contact:general');
 $teachnicalIssues = elgg_echo('ychange:contact:technical');
 
 echo <<<EOT
-$generalContact - <a href="mailto:contact@ychange.eu">contact@ychange.eu</a></br>
-$teachnicalIssues - <a href="mailto:webmaster@ychange.eu">webmaster@ychange.eu</a></br>
+$generalContact - <a href="mailto:contact@ychange.rgeo.de">contact@ychange.rgeo.de</a></br>
+$teachnicalIssues - <a href="mailto:webmaster@ychange.rgeo.de">webmaster@ychange.rgeo.de</a></br>
 <br>
-<a href="mailto:germany@ychange.eu">germany@ychange.eu</a><br>
-<a href="mailto:switzerland@ychange.eu">switzerland@ychange.eu</a><br>
-<a href="mailto:czechia@ychange.eu">czechia@ychange.eu</a><br>
-<a href="mailto:estonia@ychange.eu">estonia@ychange.eu</a><br>
+<a href="mailto:germany@ychange.rgeo.de">germany@ychange.rgeo.de</a><br>
+<a href="mailto:switzerland@ychange.rgeo.de">switzerland@ychange.rgeo.de</a><br>
+<a href="mailto:czechia@ychange.rgeo.de">czechia@ychange.rgeo.de</a><br>
+<a href="mailto:estonia@ychange.rgeo.de">estonia@ychange.rgeo.de</a><br>
 EOT;
